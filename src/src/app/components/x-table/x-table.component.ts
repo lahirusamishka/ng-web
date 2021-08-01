@@ -26,7 +26,7 @@ export class XTableComponent implements OnInit {
       this.inputData.forEach((data,index) => {
         console.log(data);
         var obj1 = data;
-        var obj2 = { ' ': 'dog' }
+        var obj2 = { 'All': '' }
         array[index]= {...obj2,...obj1 };
       });
       this.inputData=array;

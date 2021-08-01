@@ -1,3 +1,5 @@
+import { XCheckboxComponent } from './components/x-checkbox/x-checkbox.component';
+import { XTableComponent } from './components/x-table/x-table.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

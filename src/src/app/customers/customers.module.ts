@@ -1,3 +1,4 @@
+import { XCheckboxComponent } from './../components/x-checkbox/x-checkbox.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomersRoutingModule } from './customers-routing.module';
@@ -13,7 +14,8 @@ import { XTableComponent } from '../components/x-table/x-table.component';
   ],
   declarations: [
     CustomerListComponent,
-    XTableComponent
+    XTableComponent,
+    XCheckboxComponent
   ],
   entryComponents: [
   ]
