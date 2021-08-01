@@ -16,20 +16,17 @@ export class XTableComponent implements OnInit {
   @Input() addCheckBox = false;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  
+
   constructor() {}
 
   ngOnInit() {
     if (this.addCheckBox) {
       this.dataSource = [];
       var array = [];
-      this.inputData.forEach((data,index) => {
-        console.log(data);
-        var obj1 = data;
-        var obj2 = { 'All': '' }
-        array[index]= {...obj2,...obj1 };
+      this.inputData.forEach((data, index) => {
+        array[index] = { ...{All: "" }, ...data };
       });
-      this.inputData=array;
+      this.inputData = array;
       this.dataSource = new MatTableDataSource(array);
     } else {
       this.dataSource = new MatTableDataSource(this.inputData);
@@ -40,5 +37,19 @@ export class XTableComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  selectAll(event) {
+    // var array = [];
+    console.log(event);
+ 
+    document.getElementById("mat-checkbox-2").innerText["s"];
+ 
+    // this.dataSource.filteredData.forEach((data,index) => {
+    //   data.All=bool?"":" "
+    // });
+
+    // // this.inputData = array;
+    // this.dataSource=new MatTableDataSource(array);
   }
 }
