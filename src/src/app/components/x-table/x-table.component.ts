@@ -1,7 +1,7 @@
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import { MatPaginator } from "@angular/material";
+import { MatCheckboxChange, MatPaginator } from "@angular/material";
 
 @Component({
   selector: "app-x-table",
@@ -17,6 +17,15 @@ export class XTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  itemsObject = [{
+    id: 1,
+    val: 'john'
+  }, {
+    id: 2,
+    val: 'jane'
+  }];
+  selected3 = [];
+  
   constructor() {}
 
   ngOnInit() {
@@ -38,18 +47,48 @@ export class XTableComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+  
 
-  selectAll(event) {
-    // var array = [];
-    console.log(event);
- 
-    document.getElementById("mat-checkbox-2").innerText["s"];
- 
-    // this.dataSource.filteredData.forEach((data,index) => {
-    //   data.All=bool?"":" "
-    // });
-
-    // // this.inputData = array;
-    // this.dataSource=new MatTableDataSource(array);
+  toggle(item,event: MatCheckboxChange) {
+     if (event.checked) {
+      this.selected3.push(item);
+    } else {
+      const index = this.selected3.indexOf(item);
+      if (index >= 0) {
+        this.selected3.splice(index, 1);
+      }
+    }
+   console.log(item + "<>", event.checked);
   }
+
+  exists(item) {
+    return this.selected3.indexOf(item) > -1;
+  };
+
+  isIndeterminate() {
+    return (this.selected3.length > 0 && !this.isChecked());
+  };
+
+  isChecked() {
+    return this.selected3.length === this.itemsObject.length;
+  };
+
+
+
+  toggleAll(event: MatCheckboxChange) { 
+
+    if ( event.checked ) {
+
+       this.itemsObject.forEach(row => {
+          // console.log('checked row', row);
+          this.selected3.push(row)
+          });
+
+        // console.log('checked here');
+    } else {
+      // console.log('checked false');
+       this.selected3.length = 0 ;
+    }
+}
+ 
 }
