@@ -1,3 +1,4 @@
+
 import { XCheckboxComponent } from './../components/x-checkbox/x-checkbox.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

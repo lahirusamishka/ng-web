@@ -17,15 +17,8 @@ export class XTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  itemsObject = [{
-    id: 1,
-    val: 'john'
-  }, {
-    id: 2,
-    val: 'jane'
-  }];
   selected3 = [];
-  
+
   constructor() {}
 
   ngOnInit() {
@@ -33,7 +26,7 @@ export class XTableComponent implements OnInit {
       this.dataSource = [];
       var array = [];
       this.inputData.forEach((data, index) => {
-        array[index] = { ...{All: "" }, ...data };
+        array[index] = { ...{ All: "" }, ...data };
       });
       this.inputData = array;
       this.dataSource = new MatTableDataSource(array);
@@ -47,10 +40,14 @@ export class XTableComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  
 
-  toggle(item,event: MatCheckboxChange) {
-     if (event.checked) {
+  createNewBorrower(){
+console.log("create ");
+
+  }
+
+  toggle(item, event: MatCheckboxChange) {
+    if (event.checked) {
       this.selected3.push(item);
     } else {
       const index = this.selected3.indexOf(item);
@@ -58,37 +55,31 @@ export class XTableComponent implements OnInit {
         this.selected3.splice(index, 1);
       }
     }
-   console.log(item + "<>", event.checked);
   }
 
   exists(item) {
     return this.selected3.indexOf(item) > -1;
-  };
+  }
 
   isIndeterminate() {
-    return (this.selected3.length > 0 && !this.isChecked());
-  };
+    return this.selected3.length > 0 && !this.isChecked();
+  }
 
   isChecked() {
-    return this.selected3.length === this.itemsObject.length;
-  };
+    return this.selected3.length === this.inputData.length;
+  }
 
+  toggleAll(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.inputData.forEach((row) => {
+        // console.log('checked row', row);
+        this.selected3.push(row);
+      });
 
-
-  toggleAll(event: MatCheckboxChange) { 
-
-    if ( event.checked ) {
-
-       this.itemsObject.forEach(row => {
-          // console.log('checked row', row);
-          this.selected3.push(row)
-          });
-
-        // console.log('checked here');
+      // console.log('checked here');
     } else {
       // console.log('checked false');
-       this.selected3.length = 0 ;
+      this.selected3.length = 0;
     }
-}
- 
+  }
 }
