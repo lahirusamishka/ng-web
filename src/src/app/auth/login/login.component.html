@@ -1,10 +1,18 @@
-<div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
+
+
+
+<div class="container login-container" fxLayout="row" fxLayoutAlign="center center" >
     <form [formGroup]="loginForm" fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="90%">
+
+        <div class="container" fxLayout="row" fxLayoutAlign="center center" >
+
+            <img  src="../../../assets/SMAIL.png" alt="logo" height="120px">
+        </div>
+
         <mat-card>
-            <mat-card-title>angular-material-template</mat-card-title>
+            <mat-card-title></mat-card-title>
             <mat-card-subtitle>Log in to your account</mat-card-subtitle>
             <mat-card-content>
-
                 <mat-form-field class="full-width">
                     <input id="emailInput" matInput placeholder="Email" formControlName="email" autocomplete="email"
                         type="email">

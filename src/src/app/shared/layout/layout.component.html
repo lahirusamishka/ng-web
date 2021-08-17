@@ -9,7 +9,7 @@
 
     <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
       <h1>
-        angular-material-template
+        Easy Loan
       </h1>
     </a>
 
@@ -72,14 +72,35 @@
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line>Borrowers </p>
         </a>
-        <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+          <mat-icon mat-list-icon>credit_score</mat-icon>
+          <p mat-line>Loans </p>
+        </a>
+        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+          <mat-icon mat-list-icon>people</mat-icon>
+          <p mat-line>Guarantors </p>
+        </a>
+        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+          <mat-icon mat-list-icon>verified</mat-icon>
+          <p mat-line>Approve Loans </p>
+        </a>
+        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+          <mat-icon mat-list-icon>request_quote</mat-icon>
+          <p mat-line>Loans Request</p>
+        </a>
+        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+          <mat-icon mat-list-icon>person_pin</mat-icon>
+          <p mat-line>My Guarantors</p>
+        </a>
+
+        <!-- <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people
           </mat-icon>
           <p mat-line> Users </p>
-        </a>
+        </a> -->
 
-        <a mat-list-item [routerLink]="['/account/profile']">
+        <!-- <a mat-list-item [routerLink]="['/account/profile']">
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line> Account </p>
         </a>
@@ -87,11 +108,11 @@
         <a mat-list-item [routerLink]="['/auth/login']">
           <mat-icon mat-list-icon>exit_to_app</mat-icon>
           <p mat-line> Log out </p>
-        </a>
+        </a> -->
 
         <mat-divider></mat-divider>
 
-        <h3 mat-subheader>Resources</h3>
+        <!-- <h3 mat-subheader>Resources</h3>
 
         <a mat-list-item [routerLink]="['/icons']" routerLinkActive="active">
           <mat-icon mat-list-icon>
@@ -111,7 +132,7 @@
             link
           </mat-icon>
           <p mat-line> Material Components </p>
-        </a>
+        </a> -->
 
         <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
           <mat-icon mat-list-icon>
