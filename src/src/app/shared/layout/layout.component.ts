@@ -20,6 +20,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     showSpinner: boolean;
     userName: string;
     isAdmin: boolean;
+    userRole;
 
     private autoLogoutSubscription: Subscription;
 
@@ -37,10 +38,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         const user = this.authService.getCurrentUser();
-
+        this.userRole = this.authService.getUserRoles();
+        
         this.isAdmin = user.isAdmin;
         this.userName = user.fullName;
-
         // Auto log-out subscription
         const timer = TimerObservable.create(2000, 5000);
         // this.autoLogoutSubscription = timer.subscribe(t => {

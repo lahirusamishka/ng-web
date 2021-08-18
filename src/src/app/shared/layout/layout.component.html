@@ -61,34 +61,34 @@
       <mat-nav-list>
         <h3 mat-subheader>Home</h3>
 
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+        <a  mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
           </mat-icon>
           <p mat-line> Dashboard </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='admin'?true:false"  mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line>Borrowers </p>
         </a>
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='admin'?true:false" mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>credit_score</mat-icon>
           <p mat-line>Loans </p>
         </a>
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='admin'?true:false" mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>people</mat-icon>
           <p mat-line>Guarantors </p>
         </a>
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='admin'?true:false" mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>verified</mat-icon>
           <p mat-line>Approve Loans </p>
         </a>
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='customer'?true:false" mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>request_quote</mat-icon>
           <p mat-line>Loans Request</p>
         </a>
-        <a mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
+        <a *ngIf="userRole=='customer'?true:false" mat-list-item [routerLink]="['/borrowers']" routerLinkActive="active">
           <mat-icon mat-list-icon>person_pin</mat-icon>
           <p mat-line>My Guarantors</p>
         </a>

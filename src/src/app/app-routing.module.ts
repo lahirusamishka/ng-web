@@ -1,4 +1,4 @@
-import { LayoutComponent } from './shared/layout/layout.component';
+import { LayoutComponent } from "./shared/layout/layout.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -13,13 +13,13 @@ const appRoutes: Routes = [
     path: "dashboard",
     loadChildren: "./dashboard/dashboard.module#DashboardModule",
     canActivate: [AuthGuard],
-    data: { roles: ['admin','customer'] },
+    data: { roles: ["admin", "customer"] },
   },
   {
     path: "borrowers",
     loadChildren: "./customers/customers.module#CustomersModule",
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ["admin"] },
   },
   {
     path: "borrower/:id",
@@ -31,7 +31,7 @@ const appRoutes: Routes = [
     path: "account",
     loadChildren: "./account/account.module#AccountModule",
     canActivate: [AuthGuard],
-    data: { roles: ['admin','customer'] },
+    data: { roles: ["admin", "customer"] },
   },
   {
     path: "icons",
