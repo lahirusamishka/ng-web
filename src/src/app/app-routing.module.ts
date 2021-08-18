@@ -13,36 +13,27 @@ const appRoutes: Routes = [
     path: "dashboard",
     loadChildren: "./dashboard/dashboard.module#DashboardModule",
     canActivate: [AuthGuard],
-    data: { roles: ["admin", "customer"] },
+    data: { roles: ["admin", "customer","super-admin"] },
   },
   {
     path: "borrowers",
     loadChildren: "./customers/customers.module#CustomersModule",
     canActivate: [AuthGuard],
-    data: { roles: ["admin"] },
+    data: { roles: ["admin", "customer","super-admin"] },
   },
   {
     path: "borrower/:id",
     loadChildren: "./users/users.module#UsersModule",
     canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
   },
-
   {
     path: "account",
     loadChildren: "./account/account.module#AccountModule",
     canActivate: [AuthGuard],
-    data: { roles: ["admin", "customer"] },
+    data: { roles: ["admin", "customer","super-admin"] },
   },
-  {
-    path: "icons",
-    loadChildren: "./icons/icons.module#IconsModule",
-    canActivate: [AuthGuard],
-  },
-  {
-    path: "typography",
-    loadChildren: "./typography/typography.module#TypographyModule",
-    canActivate: [AuthGuard],
-  },
+ 
   {
     path: "about",
     loadChildren: "./about/about.module#AboutModule",
