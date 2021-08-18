@@ -1,13 +1,13 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="95%">
-        <form [formGroup]="loginForm">
+        <form id="test" [formGroup]="loginForm">
             <mat-card>
-                <h2>Apply Loan <button mat-stroked-button color="accent" ><mat-icon  aria-hidden="false" aria-label="Example print icon">picture_as_pdf
+                <h2>Apply Loan <button (click)="printPdf()" mat-stroked-button color="accent" ><mat-icon  aria-hidden="false" aria-label="Example print icon">picture_as_pdf
                 </mat-icon>&nbsp; Save PDF</button>  </h2>
                 
                 <mat-card-content>
 
-                    <table class="example-full-width" cellspacing="0">
+                    <table  class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
                                 <mat-form-field class="full-width">

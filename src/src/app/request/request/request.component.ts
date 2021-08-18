@@ -4,7 +4,7 @@ import { NotificationService } from "./../../core/services/notification.service"
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-
+var domToPdf = require('dom-to-pdf');
 @Component({
   selector: "app-request",
   templateUrl: "./request.component.html",
@@ -34,8 +34,21 @@ export class RequestComponent implements OnInit {
         Validators.email,
       ]),
       password: new FormControl("", Validators.required),
-      loan_product: new FormControl({value: 'personal_loans', disabled: false}, Validators.required),
+      loan_product: new FormControl(
+        { value: "personal_loans", disabled: false },
+        Validators.required
+      ),
       rememberMe: new FormControl(savedUserEmail !== null),
+    });
+  }
+
+  printPdf() {
+    var element = document.getElementById("test");
+    var options = {
+      filename: "test.pdf",
+    };
+    domToPdf(element, options, function () {
+      console.log("done");
     });
   }
 
