@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { tap } from "rxjs/operators";
@@ -12,21 +13,20 @@ import { RuntimeEnvLoaderService } from "./runtime-env-loader.service";
 export class AuthenticationService {
   private _loginStatus: BehaviorSubject<boolean>;
   constructor(
+    private router: Router,
     private envLoader: RuntimeEnvLoaderService,
     private http: HttpClient,
     @Inject("LOCALSTORAGE") private localStorage: Storage
   ) {
-    //   var user =JSON.parse(localStorage.getItem('currentUser'))
-    // const loginStatus = user.token;
-    // this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
-    // const userJson = localStorage.getItem('currentUser');
-    // if (!userJson) {
-    //     this._authUser = new BehaviorSubject<any>(null);
-    //     return;
-    // }
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    const loginStatus = user.token;
-    this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
+    if(user==null){
+      this._loginStatus = new BehaviorSubject<boolean>(true);
+      this.router.navigate(['/auth/login']);
+    }else{
+      const loginStatus = user.token;
+      this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
+    }
+    
   }
 
   getUserRoles(): any[] {
