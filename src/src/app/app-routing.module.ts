@@ -16,6 +16,36 @@ const appRoutes: Routes = [
     data: { roles: ["admin", "customer","super-admin"] },
   },
   {
+    path: "request",
+    loadChildren: "./request/request.module#RequestModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
+    path: "my",
+    loadChildren: "./my/my.module#MyModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
+    path: "loan",
+    loadChildren: "./loan/loan.module#LoanModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
+    path: "approve-loan",
+    loadChildren: "./approve/approve.module#ApproveModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
+    path: "guarantor",
+    loadChildren: "./guarantor/guarantor.module#GuarantorModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
     path: "borrowers",
     loadChildren: "./customers/customers.module#CustomersModule",
     canActivate: [AuthGuard],
@@ -33,7 +63,6 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ["admin", "customer","super-admin"] },
   },
- 
   {
     path: "about",
     loadChildren: "./about/about.module#AboutModule",
