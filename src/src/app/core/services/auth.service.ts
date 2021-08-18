@@ -10,7 +10,7 @@ import { RuntimeEnvLoaderService } from "./runtime-env-loader.service";
   providedIn: "root",
 })
 export class AuthenticationService {
-
+  private _loginStatus: BehaviorSubject<boolean>;
   constructor(
     private envLoader: RuntimeEnvLoaderService,
     private http: HttpClient,
@@ -24,7 +24,9 @@ export class AuthenticationService {
     //     this._authUser = new BehaviorSubject<any>(null);
     //     return;
     // }
-
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const loginStatus = user.token;
+    this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
   }
 
   getUserRoles(): any[] {
@@ -33,6 +35,10 @@ export class AuthenticationService {
       return [];
     }
     return JSON.parse(json).userRole;
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this._loginStatus.asObservable();
   }
 
   login(email: string, password: string): Observable<any> {
@@ -53,7 +59,7 @@ export class AuthenticationService {
             status: data.user.status,
           })
         );
- 
+        this._loginStatus.next(true);
         return true;
       })
     );
