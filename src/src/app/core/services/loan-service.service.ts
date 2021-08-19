@@ -21,9 +21,23 @@ export class LoanServiceService {
       })
     );
   }
+  guarantorSave(data): Observable<any> {
+    return this.http.post(this.apiPath("/guarantor"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
 
   checkUserOldApplication(userId): Observable<any> {
     return this.http.get(this.apiPath("/borrower/" + userId)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  checkUserOldguarantorApplication(userId): Observable<any> {
+    return this.http.get(this.apiPath("/guarantor/" + userId)).pipe(
       tap((data) => {
         return data;
       })

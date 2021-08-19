@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { MyRoutingModule } from './my-routing.module';
 import { MyComponent } from './my/my.component';
+import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 
 @NgModule({
@@ -11,7 +12,7 @@ import { MyComponent } from './my/my.component';
   imports: [
     CommonModule,
     MyRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class MyModule { }

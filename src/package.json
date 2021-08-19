@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^8.2.5",
     "@angular/platform-browser-dynamic": "^8.2.5",
     "@angular/router": "^8.2.5",
+    "@ng-plus/signature-pad": "0.0.4",
     "@types/file-saver": "^2.0.1",
     "ajv": "^6.10.2",
     "classlist.js": "^1.1.20150312",

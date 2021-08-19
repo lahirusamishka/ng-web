@@ -148,7 +148,4 @@ export class RequestComponent implements OnInit {
     );
   }
 
-  resetPassword() {
-    this.router.navigate(["/auth/password-reset-request"]);
-  }
 }
