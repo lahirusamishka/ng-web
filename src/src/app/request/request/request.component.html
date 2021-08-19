@@ -1,16 +1,18 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
     <div fxFlex="95%">
-        <form id="test" [formGroup]="loginForm">
+        <form id="test" [formGroup]="requestForm">
             <mat-card>
-                <h2>Apply Loan <button (click)="printPdf()" mat-stroked-button color="accent" ><mat-icon  aria-hidden="false" aria-label="Example print icon">picture_as_pdf
-                </mat-icon>&nbsp; Save PDF</button>  </h2>
-                
+                <h2>New Borrower Application &nbsp;&nbsp;<button (click)="printPdf()" mat-stroked-button color="primary">
+                        <mat-icon aria-hidden="false" aria-label="Example print icon">picture_as_pdf
+                        </mat-icon>&nbsp; Save Application
+                    </button> </h2>
+
                 <mat-card-content>
 
-                    <table  class="example-full-width" cellspacing="0">
+                    <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
-                                <mat-form-field class="full-width">
+                                <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Select Loan Product</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="loan_product">
@@ -21,33 +23,37 @@
                                 </mat-form-field>
                             </td>
                             <td>
-                                <mat-form-field class="full-width">
+                                <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Disbursed By</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
-                                    <mat-select formControlName="loan_product">
+                                    <mat-select formControlName="disbursed">
                                         <mat-option value="cash">Cash</mat-option>
                                         <mat-option value="cheque">Cheque</mat-option>
                                         <mat-option value="wire_transfer">Wire Transfer</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                
+
                             </td>
                             <td>
-                                <mat-form-field class="full-width">
+                                <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Interest Method</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
 
-                                    <mat-select formControlName="loan_product" class="form-control" name="loan_interest_method" id="inputLoanInterestMethod" required="" onchange="enableDisableMethod();">
-                                         <mat-option value="flat_rate"> Flat Rate</mat-option>
-                                         <mat-option value="reducing_rate_equal_installments">Reducing Balance - Equal Installments</mat-option>
-                                         <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal Principal</mat-option>
-                                         <mat-option value="interest_only">Interest-Only</mat-option>
-                                         <mat-option value="compound_interest">Compound Interest</mat-option>
-                                        </mat-select>
+                                    <mat-select formControlName="interest" class="form-control"
+                                        name="loan_interest_method" id="inputLoanInterestMethod" required=""
+                                        onchange="enableDisableMethod();">
+                                        <mat-option value="flat_rate"> Flat Rate</mat-option>
+                                        <mat-option value="reducing_rate_equal_installments">Reducing Balance - Equal
+                                            Installments</mat-option>
+                                        <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal
+                                            Principal</mat-option>
+                                        <mat-option value="interest_only">Interest-Only</mat-option>
+                                        <mat-option value="compound_interest">Compound Interest</mat-option>
+                                    </mat-select>
 
 
                                 </mat-form-field>
-                               
+
                             </td>
                         </tr>
                     </table>
@@ -56,14 +62,36 @@
                         <tr>
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Title</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="title">
+                                        <mat-option value=""></mat-option>
+                                        <mat-option value="Mr.">Mr. </mat-option>
+                                        <mat-option value="Mrs.">Mrs. </mat-option>
+                                        <mat-option value="Miss">Miss </mat-option>
+                                        <mat-option value="Ms.">Ms. </mat-option>
+                                        <mat-option value="Dr.">Dr. </mat-option>
+                                        <mat-option value="Prof.">Prof. </mat-option>
+                                        <mat-option value="Rev.">Rev. </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>First name</mat-label>
-                                    <input matInput>
+                                    <input formControlName="first_name" matInput>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Middle name</mat-label>
+                                    <input formControlName="middle_name" matInput>
                                 </mat-form-field>
                             </td>
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Last Name</mat-label>
-                                    <input matInput>
+                                    <input formControlName="last_name" matInput>
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -72,62 +100,138 @@
                     <p>
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Address</mat-label>
-                            <textarea matInput placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
+                            <textarea matInput formControlName="address1"
+                                placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                         </mat-form-field>
                         <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label>Address 2</mat-label>
-                            <textarea matInput></textarea>
+                            <mat-label>Address 2 (Optional)</mat-label>
+                            <textarea formControlName="address2" matInput></textarea>
                         </mat-form-field>
                     </p>
+
+
+
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Email</mat-label>
+                                    <input formControlName="email" matInput>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Mobile</mat-label>
+                                    <input formControlName="mobile" matInput>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Date of Birth</mat-label>
+                                    <input formControlName="dob"  matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
 
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>gender</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="loan_product">
+                                        <mat-option value="personal_loans">Male</mat-option>
+                                        <mat-option value="business_loan">Female</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Interest Method</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+
+                                    <mat-select formControlName="interest" class="form-control"
+                                        name="loan_interest_method" id="inputLoanInterestMethod" required=""
+                                        onchange="enableDisableMethod();">
+                                        <mat-option value="flat_rate"> Flat Rate</mat-option>
+                                        <mat-option value="reducing_rate_equal_installments">Reducing Balance - Equal
+                                            Installments</mat-option>
+                                        <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal
+                                            Principal</mat-option>
+                                        <mat-option value="interest_only">Interest-Only</mat-option>
+                                        <mat-option value="compound_interest">Compound Interest</mat-option>
+                                    </mat-select>
+
+
+                                </mat-form-field>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>City</mat-label>
-                                    <input matInput placeholder="Ex. San Francisco">
+                                    <input formControlName="city" matInput placeholder="Ex. San Francisco">
                                 </mat-form-field>
                             </td>
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>State</mat-label>
-                                    <input matInput placeholder="Ex. California">
+                                    <input formControlName="state" matInput placeholder="Ex. California">
                                 </mat-form-field>
                             </td>
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Postal Code</mat-label>
-                                    <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
+                                    <input formControlName="postal_code" matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
                                     <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
                                 </mat-form-field>
                             </td>
                         </tr>
+
                     </table>
-                    <mat-form-field class="full-width">
-                        <input id="emailInput" matInput placeholder="Email" formControlName="email" autocomplete="email"
-                            type="email">
-                        <mat-error id="invalidEmailError" *ngIf="loginForm.controls['email'].hasError('email')">
-                            Please enter a valid email address
-                        </mat-error>
-                        <mat-error id="requiredEmailError" *ngIf="loginForm.controls['email'].hasError('required')">
-                            Email is
-                            <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
 
-                    <mat-form-field class="full-width">
-                        <input id="passwordInput" matInput placeholder="Password" formControlName="password"
-                            type="password" autocomplete="current-password">
-                        <mat-error id="requiredPasswordError" *ngIf="loginForm.controls['email'].hasError('required')">
-                            Password is
-                            <strong>required</strong>
-                        </mat-error>
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Working Status</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="working_status">
+                                        <mat-option value="Employee">Employee </mat-option>
+                                        <mat-option value="Government Employee">Government Employee </mat-option>
+                                        <mat-option value="Private Sector Employee">Private Sector Employee
+                                        </mat-option>
+                                        <mat-option value="Owner">Owner </mat-option>
+                                        <mat-option value="Student">Student </mat-option>
+                                        <mat-option value="Overseas Worker">Overseas Worker </mat-option>
+                                        <mat-option value="Pensioner">Pensioner </mat-option>
+                                        <mat-option value="Unemployed">Unemployed </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description"
+                            placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                     </mat-form-field>
-
                     <div class="full-width">
-                        <button mat-raised-button id="login" color="primary" [disabled]="loginForm.invalid || loading"
+                        <button mat-raised-button id="login" color="primary" 
                             (click)="save()">Save</button>
                     </div>
+                    <!-- <div class="full-width">
+                        <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
+                            (click)="save()">Save</button>
+                    </div> -->
 
                 </mat-card-content>
 
