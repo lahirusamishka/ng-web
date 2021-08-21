@@ -36,6 +36,7 @@ export class LoanServiceService {
       })
     );
   }
+  
   checkUserOldguarantorApplication(userId): Observable<any> {
     return this.http.get(this.apiPath("/guarantor/" + userId)).pipe(
       tap((data) => {
