@@ -215,3 +215,9 @@
         </form>
     </div>
 </div>
+
+<canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"></canvas>
+
+<button (click)="clearPad()">Clear</button>
+<button color="secondary" (click)="savePad()">Save</button>
+<img src='{{ signatureImg }}' />

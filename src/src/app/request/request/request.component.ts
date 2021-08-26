@@ -1,14 +1,15 @@
+
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthenticationService } from "./../../core/services/auth.service";
 import { NotificationService } from "./../../core/services/notification.service";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import domToPdf from "dom-to-pdf";
 import * as moment from "moment";
 import { DatePipe } from "@angular/common";
 import { LoanServiceService } from "src/app/core/services/loan-service.service";
-import { NgSignaturePadOptions, SignaturePadComponent } from "@almothafar/angular-signature-pad";
+import SignaturePad from "signature_pad";
 @Component({
   selector: "app-request",
   templateUrl: "./request.component.html",
@@ -18,7 +19,13 @@ export class RequestComponent implements OnInit {
   requestForm: FormGroup;
   loading: boolean;
   userId: string;
+// 
 
+title = 'signatureJS';
+signaturePad: SignaturePad;
+@ViewChild('canvas', {static: false}) canvasEl: ElementRef;
+signatureImg: string;
+// 
   constructor(
     private router: Router,
     private titleService: Title,
@@ -26,6 +33,30 @@ export class RequestComponent implements OnInit {
     private loanService: LoanServiceService
   ) {}
 
+
+  ngAfterViewInit() {
+    this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
+  }
+
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+  }
+
+  savePad() {
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
+  }
+  
   ngOnInit() {
     this.titleService.setTitle("easyloan - request");
     this.createForm();
