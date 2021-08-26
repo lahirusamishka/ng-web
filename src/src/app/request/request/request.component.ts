@@ -1,3 +1,4 @@
+import { MyExportService } from './../../core/services/print/my-export.service';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthenticationService } from "./../../core/services/auth.service";
 import { NotificationService } from "./../../core/services/notification.service";
@@ -26,7 +27,8 @@ export class RequestComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
-    private loanService: LoanServiceService
+    private loanService: LoanServiceService,
+    private printService:MyExportService
   ) {}
 
   ngAfterViewInit() {
@@ -130,13 +132,16 @@ export class RequestComponent implements OnInit {
   }
 
   printPdf() {
-    var element = document.getElementById("test");
-    var options = {
-      filename: "test.pdf",
-    };
-    domToPdf(element, options, function () {
-      console.log("done");
-    });
+    this.printService.PrintBorrower(this.requestForm.value);
+
+
+    // var element = document.getElementById("test");
+    // var options = {
+    //   filename: "test.pdf",
+    // };
+    // domToPdf(element, options, function () {
+    //   console.log("done");
+    // });
   }
 
   save() {
@@ -187,4 +192,6 @@ export class RequestComponent implements OnInit {
       }
     );
   }
+
+  
 }
