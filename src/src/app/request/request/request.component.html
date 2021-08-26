@@ -204,20 +204,25 @@
                             placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                     </mat-form-field>
 
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-label>Signature</mat-label>
+                                <canvas #canvas (touchstart)="startDrawing($event)"></canvas>
+
+                                <button (click)="clearPad()">Clear</button>
+                                <button (click)="saveSign()">Save</button>
+                            </td>
+
+                        </tr>
+
+                    </table>
                     <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
                             (click)="save()">Save</button>
                     </div>
-
                 </mat-card-content>
-
             </mat-card>
         </form>
     </div>
 </div>
-
-<canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"></canvas>
-
-<button (click)="clearPad()">Clear</button>
-<button color="secondary" (click)="savePad()">Save</button>
-<img src='{{ signatureImg }}' />

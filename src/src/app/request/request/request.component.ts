@@ -1,4 +1,3 @@
-
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthenticationService } from "./../../core/services/auth.service";
 import { NotificationService } from "./../../core/services/notification.service";
@@ -19,13 +18,10 @@ export class RequestComponent implements OnInit {
   requestForm: FormGroup;
   loading: boolean;
   userId: string;
-// 
+  signatureImg: string;
+  signaturePad: SignaturePad;
+  @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
 
-title = 'signatureJS';
-signaturePad: SignaturePad;
-@ViewChild('canvas', {static: false}) canvasEl: ElementRef;
-signatureImg: string;
-// 
   constructor(
     private router: Router,
     private titleService: Title,
@@ -33,30 +29,30 @@ signatureImg: string;
     private loanService: LoanServiceService
   ) {}
 
-
   ngAfterViewInit() {
     this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
   }
 
   startDrawing(event: Event) {
-    console.log(event);
-    // works in device not in browser
-
+    this.loading = false;
   }
 
-  moved(event: Event) {
-    // works in device not in browser
+  saveSign() {
+    console.log(this.signatureImg);
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
+    if (this.signatureImg) {
+      console.log("ss");
+
+      this.loading = false;
+    }
   }
 
   clearPad() {
     this.signaturePad.clear();
+    this.loading = true;
   }
 
-  savePad() {
-    const base64Data = this.signaturePad.toDataURL();
-    this.signatureImg = base64Data;
-  }
-  
   ngOnInit() {
     this.titleService.setTitle("easyloan - request");
     this.createForm();
@@ -92,25 +88,29 @@ signatureImg: string;
       this.requestForm.get("working_status").setValue(data.working_status);
       this.requestForm.get("title").setValue(data.title);
       this.requestForm.get("gender").setValue(data.gender);
+      this.signaturePad.fromDataURL("data:image/jpeg;base64," + data.image);
   }
 
   private createForm() {
     this.requestForm = new FormGroup({
-      email: new FormControl("", [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl("", [Validators.required, Validators.email]),
       first_name: new FormControl("", [Validators.required]),
       gender: new FormControl("", [Validators.required]),
       city: new FormControl("", [Validators.required]),
       state: new FormControl("", [Validators.required]),
-      postal_code: new FormControl("", [Validators.required,Validators.pattern('[0-9]{5}')]),
+      postal_code: new FormControl("", [
+        Validators.required,
+        Validators.pattern("[0-9]{5}"),
+      ]),
       address1: new FormControl("", [Validators.required]),
       address2: new FormControl("", []),
       last_name: new FormControl("", []),
       description: new FormControl("", []),
       middle_name: new FormControl("", [Validators.required]),
-      mobile: new FormControl("", [Validators.required,Validators.pattern("[0-9 ]{10}")]),
+      mobile: new FormControl("", [
+        Validators.required,
+        Validators.pattern("[0-9 ]{10}"),
+      ]),
       dob: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
       working_status: new FormControl("", [Validators.required]),
@@ -140,11 +140,15 @@ signatureImg: string;
   }
 
   save() {
+    console.log(this.signatureImg);
     console.log(this.requestForm.value);
 
     let formattedDate = new Date(
       this.requestForm.get("dob").value
     ).toLocaleString();
+
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
 
     var data = {
       address1: this.requestForm.get("address1").value,
@@ -166,6 +170,7 @@ signatureImg: string;
       gender: this.requestForm.get("gender").value,
       state: this.requestForm.get("state").value,
       userId: this.userId,
+      image: undefined ? null : String(this.signatureImg).split(",")[1],
     };
 
     console.log(data);
@@ -182,5 +187,4 @@ signatureImg: string;
       }
     );
   }
-
 }
