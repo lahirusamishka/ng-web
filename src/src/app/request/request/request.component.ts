@@ -59,6 +59,7 @@ export class RequestComponent implements OnInit {
       this.requestForm.get("state").setValue(data.state);
       this.requestForm.get("working_status").setValue(data.working_status);
       this.requestForm.get("title").setValue(data.title);
+      this.requestForm.get("gender").setValue(data.gender);
   }
 
   private createForm() {
@@ -68,15 +69,16 @@ export class RequestComponent implements OnInit {
         Validators.email,
       ]),
       first_name: new FormControl("", [Validators.required]),
+      gender: new FormControl("", [Validators.required]),
       city: new FormControl("", [Validators.required]),
       state: new FormControl("", [Validators.required]),
-      postal_code: new FormControl("", [Validators.required]),
+      postal_code: new FormControl("", [Validators.required,Validators.pattern('[0-9]{5}')]),
       address1: new FormControl("", [Validators.required]),
       address2: new FormControl("", []),
       last_name: new FormControl("", []),
       description: new FormControl("", []),
       middle_name: new FormControl("", [Validators.required]),
-      mobile: new FormControl("", [Validators.required]),
+      mobile: new FormControl("", [Validators.required,Validators.pattern("[0-9 ]{10}")]),
       dob: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
       working_status: new FormControl("", [Validators.required]),
@@ -129,6 +131,7 @@ export class RequestComponent implements OnInit {
       middle_name: this.requestForm.get("middle_name").value,
       mobile: this.requestForm.get("mobile").value,
       postal_code: this.requestForm.get("postal_code").value,
+      gender: this.requestForm.get("gender").value,
       state: this.requestForm.get("state").value,
       userId: this.userId,
     };
