@@ -8,6 +8,7 @@ import domToPdf from "dom-to-pdf";
 import * as moment from "moment";
 import { DatePipe } from "@angular/common";
 import { LoanServiceService } from "src/app/core/services/loan-service.service";
+import { NgSignaturePadOptions, SignaturePadComponent } from "@almothafar/angular-signature-pad";
 @Component({
   selector: "app-request",
   templateUrl: "./request.component.html",

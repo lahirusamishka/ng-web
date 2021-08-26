@@ -2,7 +2,8 @@
     <div fxFlex="95%">
         <form id="test" [formGroup]="requestForm">
             <mat-card>
-                <h2>New Borrower Application &nbsp;&nbsp;<button (click)="printPdf()" mat-stroked-button color="primary">
+                <h2>New Borrower Application &nbsp;&nbsp;<button (click)="printPdf()" mat-stroked-button
+                        color="primary">
                         <mat-icon aria-hidden="false" aria-label="Example print icon">picture_as_pdf
                         </mat-icon>&nbsp; Save Application
                     </button> </h2>
@@ -34,7 +35,7 @@
                                 </mat-form-field>
 
                             </td>
-                           
+
                         </tr>
                     </table>
 
@@ -109,7 +110,7 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Date of Birth</mat-label>
-                                    <input formControlName="dob"  matInput [matDatepicker]="picker">
+                                    <input formControlName="dob" matInput [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -167,7 +168,8 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Postal Code</mat-label>
-                                    <input formControlName="postal_code" matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
+                                    <input formControlName="postal_code" matInput #postalCode maxlength="5"
+                                        placeholder="Ex. 94105" value="94043">
                                     <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
                                 </mat-form-field>
                             </td>
@@ -201,7 +203,7 @@
                         <textarea matInput formControlName="description"
                             placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                     </mat-form-field>
-                  
+
                     <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
                             (click)="save()">Save</button>

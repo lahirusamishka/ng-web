@@ -5,13 +5,12 @@ import { CommonModule } from '@angular/common';
 import { RequestRoutingModule } from './request-routing.module';
 import { RequestComponent } from './request/request.component';
 
-
 @NgModule({
   declarations: [RequestComponent],
   imports: [
     CommonModule,
     RequestRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class RequestModule { }

@@ -13,6 +13,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { LoggerModule } from "ngx-logger";
 import { environment } from "../environments/environment";
 import { RuntimeEnvLoaderService } from "./core/services/runtime-env-loader.service";
+
 const appInitializeFn = (envLoader: RuntimeEnvLoaderService) => {
   return () => envLoader.loadAppConfig();
 };

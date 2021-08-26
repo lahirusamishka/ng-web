@@ -63,8 +63,10 @@ export class GuarantorComponent implements OnInit {
         } else {
           this.dataSource = new MatTableDataSource(this.inputData);
         }
-        this.displayedColumns = Object.keys(this.inputData[0]);
-        this.dataSource.sort = this.sort;
+        if(this.inputData[0]){
+          this.displayedColumns = Object.keys(this.inputData[0]);
+          this.dataSource.sort = this.sort;
+        }
       }
     });
   }
