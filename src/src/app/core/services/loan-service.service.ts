@@ -21,6 +21,7 @@ export class LoanServiceService {
       })
     );
   }
+  
   guarantorSave(data): Observable<any> {
     return this.http.post(this.apiPath("/guarantor"), data).pipe(
       tap((data) => {
@@ -36,9 +37,41 @@ export class LoanServiceService {
       })
     );
   }
+
+  borrowerGetById(userId): Observable<any> {
+    return this.http.get(this.apiPath("/borrower/data/" + userId)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
+  getAllBorrower(): Observable<any> {
+    return this.http.get(this.apiPath("/borrower")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllGuarantor(): Observable<any> {
+    return this.http.get(this.apiPath("/guarantor")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
   
   checkUserOldguarantorApplication(userId): Observable<any> {
     return this.http.get(this.apiPath("/guarantor/" + userId)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
+  guarantorGetById(userId): Observable<any> {
+    return this.http.get(this.apiPath("/guarantor/data/" + userId)).pipe(
       tap((data) => {
         return data;
       })

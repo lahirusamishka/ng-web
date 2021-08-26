@@ -34,27 +34,7 @@
                                 </mat-form-field>
 
                             </td>
-                            <td>
-                                <mat-form-field class="example-full-width" appearance="fill">
-                                    <mat-label>Interest Method</mat-label>
-                                    <!-- <mat-select [(value)]="selected"> -->
-
-                                    <mat-select formControlName="interest" class="form-control"
-                                        name="loan_interest_method" id="inputLoanInterestMethod" required=""
-                                        onchange="enableDisableMethod();">
-                                        <mat-option value="flat_rate"> Flat Rate</mat-option>
-                                        <mat-option value="reducing_rate_equal_installments">Reducing Balance - Equal
-                                            Installments</mat-option>
-                                        <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal
-                                            Principal</mat-option>
-                                        <mat-option value="interest_only">Interest-Only</mat-option>
-                                        <mat-option value="compound_interest">Compound Interest</mat-option>
-                                    </mat-select>
-
-
-                                </mat-form-field>
-
-                            </td>
+                           
                         </tr>
                     </table>
 
@@ -166,10 +146,7 @@
                                         <mat-option value="interest_only">Interest-Only</mat-option>
                                         <mat-option value="compound_interest">Compound Interest</mat-option>
                                     </mat-select>
-
-
                                 </mat-form-field>
-
                             </td>
                         </tr>
                     </table>
@@ -224,14 +201,11 @@
                         <textarea matInput formControlName="description"
                             placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                     </mat-form-field>
+                  
                     <div class="full-width">
-                        <button mat-raised-button id="login" color="primary" 
-                            (click)="save()">Save</button>
-                    </div>
-                    <!-- <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
                             (click)="save()">Save</button>
-                    </div> -->
+                    </div>
 
                 </mat-card-content>
 

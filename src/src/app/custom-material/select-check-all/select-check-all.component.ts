@@ -16,6 +16,8 @@ export class SelectCheckAllComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("call");
+    
   }
 
   isChecked(): boolean {

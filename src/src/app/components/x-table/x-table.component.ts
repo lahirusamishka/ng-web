@@ -22,23 +22,30 @@ export class XTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.addCheckBox) {
-      this.dataSource = [];
-      var array = [];
-      this.inputData.forEach((data, index) => {
-        array[index] = { ...{ All: "" }, ...data };
-      });
-      this.inputData = array;
-      this.dataSource = new MatTableDataSource(array);
-    } else {
-      this.dataSource = new MatTableDataSource(this.inputData);
+    console.log(this.inputData);
+    
+    if(this.inputData){
+
+      if (this.addCheckBox) {
+        this.dataSource = [];
+        var array = [];
+        this.inputData.forEach((data, index) => {
+          array[index] = { ...{ All: "" }, ...data };
+        });
+        this.inputData = array;
+        this.dataSource = new MatTableDataSource(array);
+      } else {
+        this.dataSource = new MatTableDataSource(this.inputData);
+      }
+      this.displayedColumns = Object.keys(this.inputData[0]);
+      this.dataSource.sort = this.sort;
     }
-    this.displayedColumns = Object.keys(this.inputData[0]);
-    this.dataSource.sort = this.sort;
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    if(this.inputData){
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   createNewBorrower(){
