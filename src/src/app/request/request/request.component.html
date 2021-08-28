@@ -176,15 +176,7 @@
                                     <mat-label>Working Status</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="working_status">
-                                        <mat-option value="Employee">Employee </mat-option>
-                                        <mat-option value="Government Employee">Government Employee </mat-option>
-                                        <mat-option value="Private Sector Employee">Private Sector Employee
-                                        </mat-option>
-                                        <mat-option value="Owner">Owner </mat-option>
-                                        <mat-option value="Student">Student </mat-option>
-                                        <mat-option value="Overseas Worker">Overseas Worker </mat-option>
-                                        <mat-option value="Pensioner">Pensioner </mat-option>
-                                        <mat-option value="Unemployed">Unemployed </mat-option>
+                                        <mat-option *ngFor="let item of workingStatus" value="{{ item.keyName }}">{{ item.name }} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </td>

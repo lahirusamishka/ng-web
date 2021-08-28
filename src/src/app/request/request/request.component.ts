@@ -26,6 +26,7 @@ export class RequestComponent implements OnInit {
   signaturePad: SignaturePad;
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
   LoanProducts: any;
+  workingStatus: any;
 
   constructor(
     private router: Router,
@@ -71,6 +72,9 @@ export class RequestComponent implements OnInit {
     })
     this.loanService.getAllInterstMethods().subscribe(res=>{
       this.InterstMethods=res;
+    })
+    this.loanService.getAllWorkingStatus().subscribe(res=>{
+      this.workingStatus=res;
     })
   }
 

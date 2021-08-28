@@ -64,6 +64,14 @@ export class LoanServiceService {
     );
   }
 
+  getAllWorkingStatus(): Observable<any> {
+    return this.http.get(this.apiPath("/workingstatus")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
   getAllInterstMethods(): Observable<any> {
     return this.http.get(this.apiPath("/intrestmethod")).pipe(
       tap((data) => {
