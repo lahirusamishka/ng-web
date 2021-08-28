@@ -30,6 +30,8 @@ export class LoanServiceService {
     );
   }
 
+
+
   checkUserOldApplication(userId): Observable<any> {
     return this.http.get(this.apiPath("/borrower/" + userId)).pipe(
       tap((data) => {
@@ -48,6 +50,22 @@ export class LoanServiceService {
   
   getAllBorrower(): Observable<any> {
     return this.http.get(this.apiPath("/borrower")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllLoanProduct(): Observable<any> {
+    return this.http.get(this.apiPath("/loanoproduct")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllInterstMethods(): Observable<any> {
+    return this.http.get(this.apiPath("/intrestmethod")).pipe(
       tap((data) => {
         return data;
       })

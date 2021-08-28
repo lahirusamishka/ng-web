@@ -19,6 +19,9 @@ export class RequestComponent implements OnInit {
   requestForm: FormGroup;
   loading: boolean;
   userId: string;
+
+  InterstMethods=[];
+
   signatureImg: string;
   signaturePad: SignaturePad;
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
@@ -44,8 +47,6 @@ export class RequestComponent implements OnInit {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
     if (this.signatureImg) {
-      console.log("ss");
-
       this.loading = false;
     }
   }
@@ -56,10 +57,20 @@ export class RequestComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadAllCheckBoxValues();
     this.titleService.setTitle("easyloan - request");
     this.createForm();
     this.userId = this.loanService.getLogUserId();
     this.checkIsHaveApplication();
+  }
+
+  loadAllCheckBoxValues() {
+    this.loanService.getAllLoanProduct().subscribe(res=>{
+      console.log(res);
+    })
+    this.loanService.getAllInterstMethods().subscribe(res=>{
+      this.InterstMethods=res;
+    })
   }
 
   checkIsHaveApplication() {

@@ -139,13 +139,13 @@
                                     <mat-select formControlName="interest" class="form-control"
                                         name="loan_interest_method" id="inputLoanInterestMethod" required=""
                                         onchange="enableDisableMethod();">
-                                        <mat-option value="flat_rate"> Flat Rate</mat-option>
-                                        <mat-option value="reducing_rate_equal_installments">Reducing Balance - Equal
+                                        <mat-option *ngFor="let method of InterstMethods" value="{{ method.keyName }}">{{ method.name }}</mat-option>
+                                        <!-- <mat-option value="reducing_rate_equal_installments">                Reducing Balance - Equal
                                             Installments</mat-option>
                                         <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal
                                             Principal</mat-option>
                                         <mat-option value="interest_only">Interest-Only</mat-option>
-                                        <mat-option value="compound_interest">Compound Interest</mat-option>
+                                        <mat-option value="compound_interest">Compound Interest</mat-option> -->
                                     </mat-select>
                                 </mat-form-field>
                             </td>
