@@ -89,6 +89,11 @@ export class CustomerListComponent implements OnInit {
     console.log("create ");
   }
 
+  print(){
+    console.log(this.selected3);
+    
+  }
+
   toggle(item, event: MatCheckboxChange) {
     if (event.checked) {
       this.selected3.push(item);

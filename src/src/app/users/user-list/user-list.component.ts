@@ -1,11 +1,13 @@
+import { MyExportService } from './../../core/services/print/my-export.service';
 import { LoanServiceService } from 'src/app/core/services/loan-service.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { NotificationService } from "../../core/services/notification.service";
 import { NGXLogger } from "ngx-logger";
+import SignaturePad from 'signature_pad';
 
 @Component({
   selector: "app-user-list",
@@ -13,20 +15,27 @@ import { NGXLogger } from "ngx-logger";
   styleUrls: ["./user-list.component.css"],
 })
 export class UserListComponent implements OnInit {
-  userId: any;
-  isReturnId: boolean;
   requestForm: FormGroup;
   loading: boolean;
-  callUserId: any;
-  callNewUserId: any;
-  userObj: any;
+  userId: string;
+
+  InterstMethods=[];
+
+  signatureImg: string;
+  signaturePad: SignaturePad;
+  @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
+  LoanProducts: any;
+  workingStatus: any;
+  isReturnId: boolean;
+  userIdNew: any;
 
   constructor(
-    private logger: NGXLogger,
-    private notificationService: NotificationService,
+    private router: Router,
     private titleService: Title,
+    private notificationService: NotificationService,
+    private loanService: LoanServiceService,
+    private printService:MyExportService,
     private route: ActivatedRoute,
-    private loanService:LoanServiceService
   ) {
     this.route.params.subscribe((result) => {
       if(result.id=="new"){
@@ -38,22 +47,59 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
+  }
+
+  startDrawing(event: Event) {
+    this.loading = false;
+  }
+
+  saveSign() {
+    console.log(this.signatureImg);
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
+    if (this.signatureImg) {
+      this.loading = false;
+    }
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+    this.loading = true;
+  }
+
   ngOnInit() {
-    console.log(this.userId);
+
+    this.loadAllCheckBoxValues();
+    this.titleService.setTitle("easyloan - request");
     this.createForm();
+    this.userIdNew = this.loanService.getLogUserId();
     this.checkIsHaveApplication();
   }
+
+  loadAllCheckBoxValues() {
+    this.loanService.getAllLoanProduct().subscribe(res=>{
+      this.LoanProducts=res;
+    })
+    this.loanService.getAllInterstMethods().subscribe(res=>{
+      this.InterstMethods=res;
+    })
+    this.loanService.getAllWorkingStatus().subscribe(res=>{
+      this.workingStatus=res;
+    })
+  }
+
   checkIsHaveApplication() {
-    this.loanService.borrowerGetById(this.userId).subscribe((res) => {
+    this.loanService.borrowerGetByNewId(this.userId).subscribe((res) => {
       if (res != null) {
-        this.userObj=res;
+        console.log(res);
         this.fillTheBorrowerData(res);
       }
     });
   }
+
   fillTheBorrowerData(data) {
-    this.callUserId=data.id;
-    this.callNewUserId=data.userId;
     this.requestForm.get("address1").setValue(data.address1),
       this.requestForm.get("address2").setValue(data.address2),
       this.requestForm.get("city").setValue(data.city),
@@ -71,23 +117,30 @@ export class UserListComponent implements OnInit {
       this.requestForm.get("state").setValue(data.state);
       this.requestForm.get("working_status").setValue(data.working_status);
       this.requestForm.get("title").setValue(data.title);
+      this.requestForm.get("gender").setValue(data.gender);
+      this.signaturePad.fromDataURL("data:image/jpeg;base64," + data.image);
   }
-  createForm() {
+
+  private createForm() {
     this.requestForm = new FormGroup({
-      email: new FormControl("", [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl("", [Validators.required, Validators.email]),
       first_name: new FormControl("", [Validators.required]),
+      gender: new FormControl("", [Validators.required]),
       city: new FormControl("", [Validators.required]),
       state: new FormControl("", [Validators.required]),
-      postal_code: new FormControl("", [Validators.required]),
+      postal_code: new FormControl("", [
+        Validators.required,
+        Validators.pattern("[0-9]{5}"),
+      ]),
       address1: new FormControl("", [Validators.required]),
       address2: new FormControl("", []),
       last_name: new FormControl("", []),
       description: new FormControl("", []),
       middle_name: new FormControl("", [Validators.required]),
-      mobile: new FormControl("", [Validators.required]),
+      mobile: new FormControl("", [
+        Validators.required,
+        Validators.pattern("[0-9 ]{10}"),
+      ]),
       dob: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
       working_status: new FormControl("", [Validators.required]),
@@ -106,45 +159,57 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  printPdf(){
+  printPdf() {
+    this.printService.PrintBorrower(this.requestForm.value);
 
+
+    // var element = document.getElementById("test");
+    // var options = {
+    //   filename: "test.pdf",
+    // };
+    // domToPdf(element, options, function () {
+    //   console.log("done");
+    // });
   }
 
-  save(){
-    // console.log(this.requestForm.value);
+  save() {
+    console.log(this.signatureImg);
+    console.log(this.requestForm.value);
 
-    // let formattedDate = new Date(
-    //   this.requestForm.get("dob").value
-    // ).toLocaleString();
     let formattedDate = new Date(
       this.requestForm.get("dob").value
     ).toLocaleString();
 
- 
-    this.userObj.address1= this.requestForm.get("address1").value,
-      this.userObj.address2= this.requestForm.get("address2").value,
-      this.userObj.city= this.requestForm.get("city").value,
-      this.userObj.description= this.requestForm.get("description").value,
-      this.userObj.disbursed= this.requestForm.get("disbursed").value,
-      this.userObj.dob= formattedDate,
-      this.userObj.email= this.requestForm.get("email").value,
-      this.userObj.working_status= this.requestForm.get("working_status").value,
-      this.userObj.first_name= this.requestForm.get("first_name").value,
-      this.userObj.interest= this.requestForm.get("interest").value,
-      this.userObj.last_name= this.requestForm.get("last_name").value,
-      this.userObj.title= this.requestForm.get("title").value,
-      this.userObj.loan_product= this.requestForm.get("loan_product").value,
-      this.userObj.middle_name= this.requestForm.get("middle_name").value,
-      this.userObj.mobile= this.requestForm.get("mobile").value,
-      this.userObj.postal_code= this.requestForm.get("postal_code").value,
-      this.userObj.state= this.requestForm.get("state").value,
-      this.userObj.userId= this.callNewUserId,
-    
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
 
+    var data = {
+      address1: this.requestForm.get("address1").value,
+      address2: this.requestForm.get("address2").value,
+      city: this.requestForm.get("city").value,
+      description: this.requestForm.get("description").value,
+      disbursed: this.requestForm.get("disbursed").value,
+      dob: formattedDate,
+      email: this.requestForm.get("email").value,
+      working_status: this.requestForm.get("working_status").value,
+      first_name: this.requestForm.get("first_name").value,
+      interest: this.requestForm.get("interest").value,
+      last_name: this.requestForm.get("last_name").value,
+      title: this.requestForm.get("title").value,
+      loan_product: this.requestForm.get("loan_product").value,
+      middle_name: this.requestForm.get("middle_name").value,
+      mobile: this.requestForm.get("mobile").value,
+      postal_code: this.requestForm.get("postal_code").value,
+      gender: this.requestForm.get("gender").value,
+      state: this.requestForm.get("state").value,
+      userId: this.userIdNew,
+      image: undefined ? null : String(this.signatureImg).split(",")[1],
+    };
 
+    console.log(data);
 
     this.loading = true;
-    this.loanService.borrowerSave(this.userObj).subscribe(
+    this.loanService.borrowerSave(data).subscribe(
       (data) => {
         console.log(data);
 
@@ -155,4 +220,5 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+
 }

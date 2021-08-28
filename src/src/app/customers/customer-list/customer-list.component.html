@@ -13,7 +13,7 @@
           </button>
 
           &nbsp;
-          <button *ngIf="addCheckBox" mat-stroked-button color="accent" [disabled]="selected3.length==0?true:false">
+          <button *ngIf="addCheckBox" (click)="print()" mat-stroked-button color="accent" [disabled]="selected3.length==0?true:false">
             <mat-icon aria-hidden="false" aria-label="Example print icon">print
             </mat-icon>Export Data
           </button> &nbsp;

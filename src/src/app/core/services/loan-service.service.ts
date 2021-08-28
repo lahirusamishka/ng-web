@@ -103,6 +103,13 @@ export class LoanServiceService {
       })
     );
   }
+  borrowerGetByNewId(userId): Observable<any> {
+    return this.http.get(this.apiPath("/borrower/new/" + userId)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
 
   getLogUserId() {
     const json = localStorage.getItem("currentUser");
