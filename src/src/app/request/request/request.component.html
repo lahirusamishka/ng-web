@@ -17,9 +17,7 @@
                                     <mat-label>Select Loan Product</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="loan_product">
-                                        <mat-option value="personal_loans">Personal Loans</mat-option>
-                                        <mat-option value="business_loan">Business Loan</mat-option>
-                                        <mat-option value="student_loan">Student Loan</mat-option>
+                                        <mat-option *ngFor="let item of LoanProducts" value="{{ item.keyName }}">{{ item.name }}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -140,12 +138,6 @@
                                         name="loan_interest_method" id="inputLoanInterestMethod" required=""
                                         onchange="enableDisableMethod();">
                                         <mat-option *ngFor="let method of InterstMethods" value="{{ method.keyName }}">{{ method.name }}</mat-option>
-                                        <!-- <mat-option value="reducing_rate_equal_installments">                Reducing Balance - Equal
-                                            Installments</mat-option>
-                                        <mat-option value="reducing_rate_equal_principal">Reducing Balance - Equal
-                                            Principal</mat-option>
-                                        <mat-option value="interest_only">Interest-Only</mat-option>
-                                        <mat-option value="compound_interest">Compound Interest</mat-option> -->
                                     </mat-select>
                                 </mat-form-field>
                             </td>

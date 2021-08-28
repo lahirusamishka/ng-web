@@ -25,6 +25,7 @@ export class RequestComponent implements OnInit {
   signatureImg: string;
   signaturePad: SignaturePad;
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
+  LoanProducts: any;
 
   constructor(
     private router: Router,
@@ -66,7 +67,7 @@ export class RequestComponent implements OnInit {
 
   loadAllCheckBoxValues() {
     this.loanService.getAllLoanProduct().subscribe(res=>{
-      console.log(res);
+      this.LoanProducts=res;
     })
     this.loanService.getAllInterstMethods().subscribe(res=>{
       this.InterstMethods=res;
