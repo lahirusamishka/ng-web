@@ -1,16 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NotificationService } from './../../core/services/notification.service';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MyComponent } from './my.component';
-
-describe('MyComponent', () => {
+import { MyComponent } from "./my.component";
+import { RouterTestingModule } from "@angular/router/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatSnackBarModule } from "@angular/material";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+describe("MyComponent", () => {
   let component: MyComponent;
   let fixture: ComponentFixture<MyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule,RouterTestingModule, ReactiveFormsModule, MatSnackBarModule],
+      declarations: [MyComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('MyComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
