@@ -10,6 +10,7 @@ import { LoanServiceService } from "src/app/core/services/loan-service.service";
 
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: "app-customer-list",
@@ -25,11 +26,13 @@ export class CustomerListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   actualPaginator: MatPaginator;
-  
 
   selected3 = [];
 
-  constructor(private dialog: MatDialog,private loanService: LoanServiceService) {}
+  constructor(
+    private dialog: MatDialog,
+    private loanService: LoanServiceService
+  ) {}
 
   ngOnInit() {
     this.loadTableData();
@@ -37,14 +40,21 @@ export class CustomerListComponent implements OnInit {
 
   loadTableData() {
     console.log("cccc");
-    
+
     this.loanService.getAllBorrower().subscribe((res) => {
       console.log(res);
       var arrayList = [];
       res.forEach((data) => {
         var obj = {
-          id:data.id,
-          first_name: this.checkNull(data.title) +" "+this.checkNull(data.first_name) + " " + this.checkNull(data.middle_name) + " " + this.checkNull(data.last_name),
+          id: data.id,
+          first_name:
+            this.checkNull(data.title) +
+            " " +
+            this.checkNull(data.first_name) +
+            " " +
+            this.checkNull(data.middle_name) +
+            " " +
+            this.checkNull(data.last_name),
           city: data.address1 + "_" + data.address2,
           disbursed: this.checkNull(data.disbursed),
           dob: this.checkNull(data.dob),
@@ -73,7 +83,7 @@ export class CustomerListComponent implements OnInit {
         } else {
           this.dataSource = new MatTableDataSource(this.inputData);
         }
-        if(this.inputData[0]){
+        if (this.inputData[0]) {
           this.displayedColumns = Object.keys(this.inputData[0]);
         }
         this.dataSource.sort = this.sort;
@@ -81,25 +91,24 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  checkNull(value){
-    if(value=="" || value=="  " ){
-      return "_"
-    }else{
+  checkNull(value) {
+    if (value == "" || value == "  ") {
+      return "_";
+    } else {
       return value;
     }
   }
 
   ngAfterViewInit() {
-      // this.dataSource.paginator = this.actualPaginator;
+    // this.dataSource.paginator = this.actualPaginator;
   }
 
   createNewBorrower() {
     console.log("create ");
   }
 
-  print(){
+  print() {
     console.log(this.selected3);
-    
   }
 
   toggle(item, event: MatCheckboxChange) {
@@ -139,29 +148,29 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-  delete(){
-    const dialogRef = this.dialog.open(ConfirmationDialog,{
-      data:{
-        message: 'Are you sure want to delete?',
+  delete() {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: "Are you sure want to delete?",
         buttonText: {
-          ok: 'Save',
-          cancel: 'No'
-        }
-      }
+          ok: "Save",
+          cancel: "No",
+        },
+      },
     });
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        console.log(this.selected3);
-        var id;
-        this.selected3.forEach(e=>{
+  
+        let subsArray = [];
+        this.selected3.forEach((e) => {
           console.log(e.id);
-          id=e.id
-        })
-        this.loanService.deleteBorrower(id).subscribe(res=>{
-          this.loadTableData()
-          console.log(res);
-        })
+          
+          subsArray.push(this.loanService.deleteBorrower(Number(e.id)));
+        });
+        forkJoin(subsArray).subscribe((results) => {
+          console.log(results);
+        });
       }
     });
   }

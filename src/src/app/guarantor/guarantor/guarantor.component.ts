@@ -1,8 +1,10 @@
 import { MatSort } from '@angular/material/sort';
-import { MatCheckboxChange, MatPaginator } from '@angular/material';
+import { MatCheckboxChange, MatDialog, MatPaginator } from '@angular/material';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { LoanServiceService } from 'src/app/core/services/loan-service.service';
+import { ConfirmationDialog } from 'src/app/confirmation-dialog.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-guarantor',
@@ -10,7 +12,6 @@ import { LoanServiceService } from 'src/app/core/services/loan-service.service';
   styleUrls: ['./guarantor.component.css']
 })
 export class GuarantorComponent implements OnInit {
-
   dataSource;
   displayedColumns;
   inputData;
@@ -19,30 +20,43 @@ export class GuarantorComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   actualPaginator: MatPaginator;
-  
 
   selected3 = [];
 
-  constructor(private loanService: LoanServiceService) {}
+  constructor(
+    private dialog: MatDialog,
+    private loanService: LoanServiceService
+  ) {}
 
   ngOnInit() {
+    this.loadTableData();
+  }
+
+  loadTableData() {
+    console.log("cccc");
+
     this.loanService.getAllGuarantor().subscribe((res) => {
       console.log(res);
       var arrayList = [];
       res.forEach((data) => {
-        console.log(data);
-        
         var obj = {
-          id:data.id,
-          first_name: this.checkNull(data.title) +" "+this.checkNull(data.first_name) + " " + this.checkNull(data.middle_name) + " " + this.checkNull(data.last_name),
+          id: data.id,
+          first_name:
+            this.checkNull(data.title) +
+            " " +
+            this.checkNull(data.first_name) +
+            " " +
+            this.checkNull(data.middle_name) +
+            " " +
+            this.checkNull(data.last_name),
           city: data.address1 + "_" + data.address2,
           disbursed: this.checkNull(data.disbursed),
           dob: this.checkNull(data.dob),
           email: this.checkNull(data.email),
           interest: this.checkNull(data.interest),
+          loan_product: this.checkNull(data.loan_product),
           mobile: this.checkNull(data.mobile),
           postal_code: this.checkNull(data.postal_code),
-          state: this.checkNull(data.state),
           working_status: this.checkNull(data.working_status),
           edit: " ",
         };
@@ -63,28 +77,32 @@ export class GuarantorComponent implements OnInit {
         } else {
           this.dataSource = new MatTableDataSource(this.inputData);
         }
-        if(this.inputData[0]){
+        if (this.inputData[0]) {
           this.displayedColumns = Object.keys(this.inputData[0]);
-          this.dataSource.sort = this.sort;
         }
+        this.dataSource.sort = this.sort;
       }
     });
   }
 
-  checkNull(value){
-    if(value=="" || value=="  " ){
-      return "_"
-    }else{
+  checkNull(value) {
+    if (value == "" || value == "  ") {
+      return "_";
+    } else {
       return value;
     }
   }
 
   ngAfterViewInit() {
-      // this.dataSource.paginator = this.actualPaginator;
+    // this.dataSource.paginator = this.actualPaginator;
   }
 
   createNewBorrower() {
     console.log("create ");
+  }
+
+  print() {
+    console.log(this.selected3);
   }
 
   toggle(item, event: MatCheckboxChange) {
@@ -122,6 +140,33 @@ export class GuarantorComponent implements OnInit {
       // console.log('checked false');
       this.selected3.length = 0;
     }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: "Are you sure want to delete?",
+        buttonText: {
+          ok: "Save",
+          cancel: "No",
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+  
+        let subsArray = [];
+        this.selected3.forEach((e) => {
+          console.log(e.id);
+          
+          subsArray.push(this.loanService.deleteBorrower(Number(e.id)));
+        });
+        forkJoin(subsArray).subscribe((results) => {
+          console.log(results);
+        });
+      }
+    });
   }
 
 }
