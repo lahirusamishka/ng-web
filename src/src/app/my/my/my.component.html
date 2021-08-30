@@ -8,6 +8,35 @@
                     </button> </h2>
 
                 <mat-card-content>
+
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Select Loan Product</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="loan_product">
+                                        <mat-option *ngFor="let item of LoanProducts" value="{{ item.keyName }}">{{
+                                            item.name }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Disbursed By</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="disbursed">
+                                        <mat-option value="cash">Cash</mat-option>
+                                        <mat-option value="cheque">Cheque</mat-option>
+                                        <mat-option value="wire_transfer">Wire Transfer</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </td>
+
+                        </tr>
+                    </table>
+
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
@@ -15,6 +44,7 @@
                                     <mat-label>Title</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="title">
+                                        <mat-option value=""></mat-option>
                                         <mat-option value="Mr.">Mr. </mat-option>
                                         <mat-option value="Mrs.">Mrs. </mat-option>
                                         <mat-option value="Miss">Miss </mat-option>
@@ -78,14 +108,42 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Date of Birth</mat-label>
-                                    <input formControlName="dob"  matInput [matDatepicker]="picker">
+                                    <input formControlName="dob" matInput [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </td>
                         </tr>
                     </table>
-                    
+
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>gender</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+                                    <mat-select formControlName="gender">
+                                        <mat-option value="Male">Male</mat-option>
+                                        <mat-option value="Female">Female</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Interest Method</mat-label>
+                                    <!-- <mat-select [(value)]="selected"> -->
+
+                                    <mat-select formControlName="interest" class="form-control"
+                                        name="loan_interest_method" id="inputLoanInterestMethod" required=""
+                                        onchange="enableDisableMethod();">
+                                        <mat-option *ngFor="let method of InterstMethods" value="{{ method.keyName }}">
+                                            {{ method.name }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
@@ -103,7 +161,8 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Postal Code</mat-label>
-                                    <input formControlName="postal_code" matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
+                                    <input formControlName="postal_code" matInput #postalCode maxlength="5"
+                                        placeholder="Ex. 94105" value="94043">
                                     <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
                                 </mat-form-field>
                             </td>
@@ -118,15 +177,8 @@
                                     <mat-label>Working Status</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="working_status">
-                                        <mat-option value="Employee">Employee </mat-option>
-                                        <mat-option value="Government Employee">Government Employee </mat-option>
-                                        <mat-option value="Private Sector Employee">Private Sector Employee
-                                        </mat-option>
-                                        <mat-option value="Owner">Owner </mat-option>
-                                        <mat-option value="Student">Student </mat-option>
-                                        <mat-option value="Overseas Worker">Overseas Worker </mat-option>
-                                        <mat-option value="Pensioner">Pensioner </mat-option>
-                                        <mat-option value="Unemployed">Unemployed </mat-option>
+                                        <mat-option *ngFor="let item of workingStatus" value="{{ item.keyName }}">{{
+                                            item.name }} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -136,21 +188,26 @@
                         <mat-label>Description</mat-label>
                         <textarea matInput formControlName="description"
                             placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
-                    </mat-form-field>                 
-                  
-                    <div class="full-width">
-                        <button mat-raised-button id="login" color="primary" 
-                            (click)="save()">Save</button>
-                    </div>
+                    </mat-form-field>
 
-                    <!-- <ng-signature-pad ></ng-signature-pad> -->
-                    <!-- <div class="full-width">
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-label>Signature</mat-label>
+                                <canvas #canvas (touchstart)="startDrawing($event)"></canvas>
+
+                                <button (click)="clearPad()">Clear</button>
+                                <button (click)="saveSign()">Save</button>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                    <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
                             (click)="save()">Save</button>
-                    </div> -->
-
+                    </div>
                 </mat-card-content>
-
             </mat-card>
         </form>
     </div>
