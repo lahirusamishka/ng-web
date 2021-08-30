@@ -202,6 +202,7 @@ export class UserListComponent implements OnInit {
       postal_code: this.requestForm.get("postal_code").value,
       gender: this.requestForm.get("gender").value,
       state: this.requestForm.get("state").value,
+      id: this.userId,
       userId: this.userIdNew,
       image: undefined ? null : String(this.signatureImg).split(",")[1],
     };

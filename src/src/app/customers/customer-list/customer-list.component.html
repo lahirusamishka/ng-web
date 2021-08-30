@@ -17,7 +17,7 @@
             <mat-icon aria-hidden="false" aria-label="Example print icon">print
             </mat-icon>Export Data
           </button> &nbsp;
-          <button *ngIf="addCheckBox" mat-stroked-button color="warn" [disabled]="selected3.length==0?true:false">
+          <button *ngIf="addCheckBox" (click)="delete()" mat-stroked-button color="warn" [disabled]="selected3.length==0?true:false">
             <mat-icon aria-hidden="false" aria-label="Example delete icon">delete
             </mat-icon>Delete
           </button> &nbsp;

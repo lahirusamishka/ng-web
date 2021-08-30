@@ -2,12 +2,14 @@ import { MatSort } from "@angular/material/sort";
 
 import {
   MatCheckboxChange,
+  MatDialog,
   MatPaginator,
   MatTableDataSource,
 } from "@angular/material";
 import { LoanServiceService } from "src/app/core/services/loan-service.service";
 
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
 
 @Component({
   selector: "app-customer-list",
@@ -27,7 +29,7 @@ export class CustomerListComponent implements OnInit {
 
   selected3 = [];
 
-  constructor(private loanService: LoanServiceService) {}
+  constructor(private dialog: MatDialog,private loanService: LoanServiceService) {}
 
   ngOnInit() {
     this.loanService.getAllBorrower().subscribe((res) => {
@@ -129,5 +131,18 @@ export class CustomerListComponent implements OnInit {
       // console.log('checked false');
       this.selected3.length = 0;
     }
+  }
+
+  delete(){
+    const dialogRef = this.dialog.open(ConfirmationDialog,{
+      data:{
+        message: 'Are you sure want to delete?',
+        buttonText: {
+          ok: 'Save',
+          cancel: 'No'
+        }
+      }
+    });
+    // console.log(this.selected3);
   }
 }

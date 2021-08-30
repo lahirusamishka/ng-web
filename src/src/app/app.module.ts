@@ -13,12 +13,14 @@ import { AppRoutingModule } from "./app-routing.module";
 import { LoggerModule } from "ngx-logger";
 import { environment } from "../environments/environment";
 import { RuntimeEnvLoaderService } from "./core/services/runtime-env-loader.service";
+import { ConfirmationDialog } from './confirmation-dialog.component';
 
 const appInitializeFn = (envLoader: RuntimeEnvLoaderService) => {
   return () => envLoader.loadAppConfig();
 };
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ConfirmationDialog],
+  entryComponents:[ConfirmationDialog],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
