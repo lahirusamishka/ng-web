@@ -143,6 +143,11 @@ export class CustomerListComponent implements OnInit {
         }
       }
     });
-    // console.log(this.selected3);
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        console.log(this.selected3);
+      }
+    });
   }
 }
