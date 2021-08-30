@@ -39,6 +39,14 @@ export class LoanServiceService {
       })
     );
   }
+  
+  deleteBorrower(id): Observable<any> {
+    return this.http.delete(this.apiPath("/borrower/" + id)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
 
   borrowerGetById(userId): Observable<any> {
     return this.http.get(this.apiPath("/borrower/data/" + userId)).pipe(

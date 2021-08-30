@@ -32,6 +32,12 @@ export class CustomerListComponent implements OnInit {
   constructor(private dialog: MatDialog,private loanService: LoanServiceService) {}
 
   ngOnInit() {
+    this.loadTableData();
+  }
+
+  loadTableData() {
+    console.log("cccc");
+    
     this.loanService.getAllBorrower().subscribe((res) => {
       console.log(res);
       var arrayList = [];
@@ -147,6 +153,15 @@ export class CustomerListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         console.log(this.selected3);
+        var id;
+        this.selected3.forEach(e=>{
+          console.log(e.id);
+          id=e.id
+        })
+        this.loanService.deleteBorrower(id).subscribe(res=>{
+          this.loadTableData()
+          console.log(res);
+        })
       }
     });
   }
