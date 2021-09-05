@@ -60,7 +60,7 @@ export class RequestComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllCheckBoxValues();
-    this.titleService.setTitle("easyloan - request");
+    // this.titleService.setTitle("easyloan - request");
     this.createForm();
     this.userId = this.loanService.getLogUserId();
     this.checkIsHaveApplication();
