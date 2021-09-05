@@ -1,0 +1,175 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <!-- <app-x-table [inputData]="dataSource" [tableName]="'View Borrowers'" [addCheckBox]="true" ></app-x-table> -->
+
+            <mat-card-content>
+
+
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <h2>
+
+
+
+                                View Loan Details
+                                <button mat-stroked-button>
+                                    <mat-icon aria-hidden="false" aria-label="1x Example mode_edit icon">
+                                        arrow_back_ios_new</mat-icon>Back
+                                </button> <button mat-stroked-button>
+                                    <mat-icon aria-hidden="false" aria-label="1x Example mode_edit icon">
+                                        mode_edit</mat-icon>Edit
+                                </button> <button mat-stroked-button color="warn">
+                                    <mat-icon aria-hidden="false" aria-label="1x Example mode_edit icon">
+                                        delete</mat-icon>Delete
+                                </button>
+                                <button mat-stroked-button color="accent">
+                                    <mat-icon aria-hidden="false" aria-label="Example print icon">print
+                                    </mat-icon>Print
+                                </button> &nbsp;
+                            </h2>
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <p>Mr. lahiru samishka <br>1000001 <br>Move Borrower to Another Branch <br>Create Date:
+                                11/08/2021 <br>
+                                Credit Score: 12 <br>Employee <br>DOB: 08/08/2001, 20 years <br>Loan Officer: lahiru
+                                samishka</p>
+                        </td>
+                        <td>
+                            <p>Mr. lahiru samishka <br>1000001 <br>Mh <br>Create Date:
+                                11/08/2021 <br>
+                                Credit Score: 12 <br>Employee <br>DOB: 08/08/2001, 20 years <br>Loan Officer: lahiru
+                                samishka</p>
+                        </td>
+                        <td>
+                            <p><strong>Landline:</strong> 0773361715 <br> <strong>Email:</strong> lahirusamishka@gmail.com <br>
+                                <mat-chip-list class="example-chip" cdkDropListOrientation="horizontal">
+
+                                    <mat-chip color="primary" selected>Send Email</mat-chip>
+                                </mat-chip-list>
+                        </td>
+
+
+                    </tr>
+                </table>
+
+
+
+
+
+            </mat-card-content>
+
+            <mat-tab-group>
+                <mat-tab label="Repayment">
+                    <br>
+                    <button mat-stroked-button color="basic">
+                        <mat-icon aria-hidden="false" aria-label="Example print icon">paid
+                        </mat-icon>
+                        <mat-label>Add Payment</mat-label>
+                    </button> &nbsp;
+
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <ng-container *ngFor="let column of displayedColumns" matColumnDef='{{ column }}'>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="column=='All'?true:false">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="column=='All'?true:false"></mat-checkbox>&nbsp; -->
+                                <mat-checkbox [checked]="isChecked()" [indeterminate]="isIndeterminate()"
+                                    (change)="$event ? toggleAll($event) : null" *ngIf="column=='All'?true:false">
+                                </mat-checkbox>&nbsp;
+                                {{ column | titlecase }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="element[column]==''?true:false">
+                      </mat-checkbox> -->
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? toggle(element, $event) : null" [checked]="exists(element)"
+                                    *ngIf="element[column]==''?true:false">
+                                </mat-checkbox>
+
+
+                                <a [routerLink]="['/loan/view/'+element.id]" routerLinkActive="router-link-active">
+                                    <mat-icon *ngIf="element[column]==' '?true:false" aria-hidden="false"
+                                        aria-label="Example mode_edit icon">
+                                        visibility</mat-icon>
+                                </a>&nbsp;&nbsp;
+                                {{ element[column] }}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                </mat-tab>
+                <mat-tab label="Loan Schedule">
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <ng-container *ngFor="let column of displayedColumns" matColumnDef='{{ column }}'>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="column=='All'?true:false">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="column=='All'?true:false"></mat-checkbox>&nbsp; -->
+                                <mat-checkbox [checked]="isChecked()" [indeterminate]="isIndeterminate()"
+                                    (change)="$event ? toggleAll($event) : null" *ngIf="column=='All'?true:false">
+                                </mat-checkbox>&nbsp;
+                                {{ column | titlecase }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="element[column]==''?true:false">
+                  </mat-checkbox> -->
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? toggle(element, $event) : null" [checked]="exists(element)"
+                                    *ngIf="element[column]==''?true:false">
+                                </mat-checkbox>
+
+
+                                <a [routerLink]="['/loan/view/'+element.id]" routerLinkActive="router-link-active">
+                                    <mat-icon *ngIf="element[column]==' '?true:false" aria-hidden="false"
+                                        aria-label="Example mode_edit icon">
+                                        visibility</mat-icon>
+                                </a>&nbsp;&nbsp;
+                                {{ element[column] }}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </mat-tab>
+                <mat-tab label="Pending Dues">
+
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <ng-container *ngFor="let column of displayedColumns" matColumnDef='{{ column }}'>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="column=='All'?true:false">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="column=='All'?true:false"></mat-checkbox>&nbsp; -->
+                                <mat-checkbox [checked]="isChecked()" [indeterminate]="isIndeterminate()"
+                                    (change)="$event ? toggleAll($event) : null" *ngIf="column=='All'?true:false">
+                                </mat-checkbox>&nbsp;
+                                {{ column | titlecase }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- <mat-checkbox [checked]="column.check==true?true:false" *ngIf="element[column]==''?true:false">
+                      </mat-checkbox> -->
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? toggle(element, $event) : null" [checked]="exists(element)"
+                                    *ngIf="element[column]==''?true:false">
+                                </mat-checkbox>
+
+
+                                <a [routerLink]="['/loan/view/'+element.id]" routerLinkActive="router-link-active">
+                                    <mat-icon *ngIf="element[column]==' '?true:false" aria-hidden="false"
+                                        aria-label="Example mode_edit icon">
+                                        visibility</mat-icon>
+                                </a>&nbsp;&nbsp;
+                                {{ element[column] }}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card>
+    </div>
+</div>
