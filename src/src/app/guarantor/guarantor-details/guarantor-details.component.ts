@@ -1,20 +1,18 @@
 import { MyExportService } from './../../core/services/print/my-export.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationService } from './../../core/services/notification.service';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import domToPdf from "dom-to-pdf";
-import * as moment from "moment";
-import { DatePipe } from "@angular/common";
-import { LoanServiceService } from 'src/app/core/services/loan-service.service';
 import SignaturePad from 'signature_pad';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LoanServiceService } from 'src/app/core/services/loan-service.service';
+
 @Component({
-  selector: 'app-my',
-  templateUrl: './my.component.html',
-  styleUrls: ['./my.component.css']
+  selector: 'app-guarantor-details',
+  templateUrl: './guarantor-details.component.html',
+  styleUrls: ['./guarantor-details.component.css']
 })
-export class MyComponent implements OnInit {
+export class GuarantorDetailsComponent implements OnInit {
   requestForm: FormGroup;
   loading: boolean;
   userId: string;
@@ -26,14 +24,26 @@ export class MyComponent implements OnInit {
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
   LoanProducts: any;
   workingStatus: any;
+  isReturnId: boolean;
+  userIdNew: any;
 
   constructor(
     private router: Router,
     private titleService: Title,
     private notificationService: NotificationService,
     private loanService: LoanServiceService,
-    private printService:MyExportService
-  ) {}
+    private printService:MyExportService,
+    private route: ActivatedRoute,
+  ) {
+    this.route.params.subscribe((result) => {
+      if(result.id=="new"){
+        this.isReturnId=false;
+      }else{
+        this.isReturnId=true;
+      }
+      this.userId = result.id;
+    });
+  }
 
   ngAfterViewInit() {
     this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
@@ -58,10 +68,11 @@ export class MyComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.loadAllCheckBoxValues();
     this.titleService.setTitle("easyloan - request");
     this.createForm();
-    this.userId = this.loanService.getLogUserId();
+    this.userIdNew = this.loanService.getLogUserId();
     this.checkIsHaveApplication();
   }
 
@@ -78,7 +89,7 @@ export class MyComponent implements OnInit {
   }
 
   checkIsHaveApplication() {
-    this.loanService.checkUserOldguarantorApplication(this.userId).subscribe((res) => {
+    this.loanService.guarantorGetById(this.userId).subscribe((res) => {
       if (res != null) {
         console.log(res);
         this.fillTheBorrowerData(res);
@@ -95,7 +106,6 @@ export class MyComponent implements OnInit {
       this.requestForm.get("email").setValue(data.email),
       this.requestForm.get("first_name").setValue(data.first_name),
       this.requestForm.get("last_name").setValue(data.last_name),
-  
       this.requestForm.get("middle_name").setValue(data.middle_name),
       this.requestForm.get("mobile").setValue(data.mobile),
       this.requestForm.get("postal_code").setValue(data.postal_code),
@@ -129,7 +139,7 @@ export class MyComponent implements OnInit {
       dob: new FormControl("", [Validators.required]),
       title: new FormControl("", [Validators.required]),
       working_status: new FormControl("", [Validators.required]),
-   
+  
     });
   }
 
@@ -173,7 +183,8 @@ export class MyComponent implements OnInit {
       postal_code: this.requestForm.get("postal_code").value,
       gender: this.requestForm.get("gender").value,
       state: this.requestForm.get("state").value,
-      userId: this.userId,
+      id: this.userId,
+      userId: this.userIdNew,
       image: undefined ? null : String(this.signatureImg).split(",")[1],
     };
 

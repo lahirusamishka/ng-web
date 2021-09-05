@@ -2,15 +2,16 @@
     <div fxFlex="95%">
         <form id="test" [formGroup]="requestForm">
             <mat-card>
-                <h2>Add Guarantor &nbsp;&nbsp;<button (click)="printPdf()" mat-stroked-button color="primary">
+                <h2>Borrower Details &nbsp;&nbsp;<button (click)="printPdf()" mat-stroked-button
+                        color="primary">
                         <mat-icon aria-hidden="false" aria-label="Example print icon">picture_as_pdf
                         </mat-icon>&nbsp; Save Application
                     </button> </h2>
-
+  
                 <mat-card-content>
-
+  
                     
-
+  
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
@@ -49,7 +50,7 @@
                             </td>
                         </tr>
                     </table>
-
+  
                     <p>
                         <mat-form-field class="example-full-width" appearance="fill">
                             <mat-label>Address</mat-label>
@@ -61,12 +62,12 @@
                             <textarea formControlName="address2" matInput></textarea>
                         </mat-form-field>
                     </p>
-
-
-
+  
+  
+  
                     <table class="example-full-width" cellspacing="0">
                         <tr>
-
+  
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Email</mat-label>
@@ -89,7 +90,7 @@
                             </td>
                         </tr>
                     </table>
-
+  
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
@@ -102,6 +103,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
+  
                            
                         </tr>
                     </table>
@@ -128,9 +130,9 @@
                                 </mat-form-field>
                             </td>
                         </tr>
-
+  
                     </table>
-
+  
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
@@ -138,8 +140,7 @@
                                     <mat-label>Working Status</mat-label>
                                     <!-- <mat-select [(value)]="selected"> -->
                                     <mat-select formControlName="working_status">
-                                        <mat-option *ngFor="let item of workingStatus" value="{{ item.keyName }}">{{
-                                            item.name }} </mat-option>
+                                        <mat-option *ngFor="let item of workingStatus" value="{{ item.keyName }}">{{ item.name }} </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </td>
@@ -150,19 +151,19 @@
                         <textarea matInput formControlName="description"
                             placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
                     </mat-form-field>
-
+  
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
                                 <mat-label>Signature</mat-label>
                                 <canvas #canvas (touchstart)="startDrawing($event)"></canvas>
-
+  
                                 <button (click)="clearPad()">Clear</button>
                                 <button (click)="saveSign()">Save</button>
                             </td>
-
+  
                         </tr>
-
+  
                     </table>
                     <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="requestForm.invalid || loading"
@@ -172,4 +173,4 @@
             </mat-card>
         </form>
     </div>
-</div>
+  </div>

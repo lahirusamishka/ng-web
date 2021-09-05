@@ -1,3 +1,4 @@
+import { GuarantorDetailsComponent } from './guarantor-details/guarantor-details.component';
 import { GuarantorComponent } from './guarantor/guarantor.component';
 import { LayoutComponent } from './../shared/layout/layout.component';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,14 @@ const routes: Routes = [
     children: [
       { path: '', component: GuarantorComponent },
     ]
-  }
+  },
+  {
+    path: "detail/:id",
+    component: LayoutComponent,
+    children: [
+      { path: '', component: GuarantorDetailsComponent },
+    ]
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
