@@ -21,6 +21,13 @@ export class LoanServiceService {
       })
     );
   }
+  userSave(data): Observable<any> {
+    return this.http.post(this.apiPath("/save"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
   
   guarantorSave(data): Observable<any> {
     return this.http.post(this.apiPath("/guarantor"), data).pipe(
@@ -29,6 +36,7 @@ export class LoanServiceService {
       })
     );
   }
+
 
 
 
@@ -66,6 +74,14 @@ export class LoanServiceService {
 
   getAllLoanProduct(): Observable<any> {
     return this.http.get(this.apiPath("/loanoproduct")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(this.apiPath("/all")).pipe(
       tap((data) => {
         return data;
       })

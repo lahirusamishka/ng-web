@@ -9,8 +9,9 @@ import { XCheckboxComponent } from "../components/x-checkbox/x-checkbox.componen
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
 import { LoanViewComponent } from './loan-view/loan-view.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { CreateLoanComponent } from './create-loan/create-loan.component';
 @NgModule({
-  declarations: [LoanComponent, LoanDetailsComponent, LoanViewComponent],
+  declarations: [LoanComponent, LoanDetailsComponent, LoanViewComponent, CreateLoanComponent],
   imports: [CommonModule, LoanRoutingModule, SharedModule,MatGridListModule],
 })
 export class LoanModule {}

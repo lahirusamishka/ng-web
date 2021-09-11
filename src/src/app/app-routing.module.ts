@@ -22,6 +22,12 @@ const appRoutes: Routes = [
     data: { roles: ["admin", "customer","super-admin"] },
   },
   {
+    path: "users",
+    loadChildren: "./create-user/create-user.module#CreateUserModule", 
+    canActivate: [AuthGuard],
+    data: { roles: ["super-admin"] },
+  },
+  {
     path: "my",
     loadChildren: "./my/my.module#MyModule",
     canActivate: [AuthGuard],

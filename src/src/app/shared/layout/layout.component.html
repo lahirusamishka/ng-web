@@ -80,6 +80,10 @@
           <mat-icon mat-list-icon>people</mat-icon>
           <p mat-line>Guarantors </p>
         </a>
+        <a *ngIf="userRole=='super-admin'?true:false" mat-list-item [routerLink]="['/users']" routerLinkActive="active">
+          <mat-icon mat-list-icon>people</mat-icon>
+          <p mat-line>Users</p>
+        </a>
         <a *ngIf="userRole=='admin'?true:false || userRole=='super-admin'?true:false" mat-list-item [routerLink]="['/approve-loan']" routerLinkActive="active">
           <mat-icon mat-list-icon>verified</mat-icon>
           <p mat-line>Approve Loans </p>

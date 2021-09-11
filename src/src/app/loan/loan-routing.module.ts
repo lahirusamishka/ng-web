@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoanComponent } from './loan/loan.component';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
+import { CreateLoanComponent } from './create-loan/create-loan.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,13 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: LoanViewComponent },
+    ]
+  },
+  {
+    path: "new",
+    component: LayoutComponent,
+    children: [
+      { path: '', component: CreateLoanComponent },
     ]
   },
 ];
