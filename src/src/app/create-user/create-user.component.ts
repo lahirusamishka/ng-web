@@ -44,6 +44,7 @@ export class CreateUserComponent implements OnInit {
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
   allUsers: any;
   workingStatus: any;
+  selectedUser: any;
 
   constructor(
     private router: Router,
@@ -99,7 +100,7 @@ export class CreateUserComponent implements OnInit {
         arrayList.push(obj);
       });
 
-      this.inputData = arrayList;
+      this.inputData = arrayList.reverse();
 
       if (this.inputData) {
         if (this.addCheckBox) {
@@ -204,10 +205,16 @@ export class CreateUserComponent implements OnInit {
         this.selected3.forEach((e) => {
           console.log(e.id);
 
-          subsArray.push(this.loanService.deleteBorrower(Number(e.id)));
+          subsArray.push(this.loanService.userDelete(Number(e.id)));
         });
         forkJoin(subsArray).subscribe((results) => {
           console.log(results);
+        },(error) => {
+          if (error.error == "deleted") {
+            this.getAllUsers();
+            this.notificationService.openSnackBar("User deleted");
+          }
+          this.loading = false;
         });
       }
     });
@@ -257,32 +264,42 @@ export class CreateUserComponent implements OnInit {
     // });
   }
 
+  editAction(data) {
+    console.log("aaa");
+
+    this.loanService.getUserById(data.id).subscribe((res) => {
+      this.selectedUser = res;
+      this.requestForm.get("name").setValue(res.user_name),
+        this.requestForm.get("email").setValue(res.email),
+        this.requestForm.get("address").setValue(res.address),
+        this.requestForm.get("role").setValue(res.user_role);
+    });
+  }
+
   save() {
-    
-    
-    
     var data = {
       user_name: this.requestForm.get("name").value,
       email: this.requestForm.get("email").value,
       password: this.requestForm.get("password2").value,
-      image: 'null',
+      image: "null",
       address: this.requestForm.get("address").value,
-      user_role: "user",
+      user_role: this.requestForm.get("role").value,
       refresh_token: null,
       status: "",
     };
-    
-    console.log(data);
-    
 
     this.loading = true;
     this.loanService.userSave(data).subscribe(
       (data) => {
         console.log(data);
-
-        this.notificationService.openSnackBar("request saved successfully");
       },
       (error) => {
+        if (error.error == "Existing user") {
+          this.notificationService.openSnackBar("Existing user");
+        }else{
+          this.notificationService.openSnackBar("request saved successfully");
+          this.getAllUsers();
+        }
         this.loading = false;
       }
     );

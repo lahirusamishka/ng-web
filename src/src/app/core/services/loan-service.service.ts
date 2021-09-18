@@ -9,6 +9,9 @@ import { RuntimeEnvLoaderService } from "./runtime-env-loader.service";
 })
 export class LoanServiceService {
 
+ 
+
+
   constructor(
     private http: HttpClient,
     private envLoader: RuntimeEnvLoaderService
@@ -37,9 +40,6 @@ export class LoanServiceService {
     );
   }
 
-
-
-
   checkUserOldApplication(userId): Observable<any> {
     return this.http.get(this.apiPath("/borrower/" + userId)).pipe(
       tap((data) => {
@@ -47,7 +47,23 @@ export class LoanServiceService {
       })
     );
   }
+
+  getUserById(userId): Observable<any> {
+    return this.http.get(this.apiPath("/find/" + userId)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
   
+  userDelete(id): Observable<any> {
+    return this.http.delete(this.apiPath("/delete/" + id)).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
   deleteBorrower(id): Observable<any> {
     return this.http.delete(this.apiPath("/borrower/" + id)).pipe(
       tap((data) => {

@@ -14,7 +14,7 @@
                                     <mat-select formControlName="role">
                                         <mat-option value="customer">Customer</mat-option>
                                         <mat-option value="admin">Admin</mat-option>
-                                        <mat-option value=" super-admin">Super Admin</mat-option>
+                                        <mat-option value="super-admin">Super Admin</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -60,7 +60,7 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Password</mat-label>
-                                    <input formControlName="password1" matInput>
+                                    <input formControlName="password1" type="password" matInput>
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -71,13 +71,15 @@
                             <td>
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Confirm Password</mat-label>
-                                    <input formControlName="password2" matInput>
+                                    <input formControlName="password2" type="password" matInput>
                                 </mat-form-field>
                             </td>
                         </tr>
                     </table>
                     <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="(requestForm.invalid || loading) || (requestForm.get('password1').value != requestForm.get('password2').value) "
+                            (click)="save()">Save</button>
+                        <button mat-raised-button id="login" color="primary" 
                             (click)="save()">Save</button>
                     </div>
                 </mat-card-content>
@@ -124,7 +126,7 @@
                                     </mat-checkbox>
 
 
-                                    <a [routerLink]="['/loan/view/'+element.id]" routerLinkActive="router-link-active">
+                                    <a (click)="editAction(element)">
                                         <mat-icon *ngIf="element[column]==' '?true:false" aria-hidden="false"
                                             aria-label="Example mode_edit icon">
                                             edit</mat-icon>
