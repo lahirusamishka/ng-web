@@ -26,6 +26,7 @@ export class MyComponent implements OnInit {
   @ViewChild("canvas", { static: false }) canvasEl: ElementRef;
   LoanProducts: any;
   workingStatus: any;
+  myObj: any;
 
   constructor(
     private router: Router,
@@ -87,6 +88,7 @@ export class MyComponent implements OnInit {
   }
 
   fillTheBorrowerData(data) {
+    this.myObj=data;
     this.requestForm.get("address1").setValue(data.address1),
       this.requestForm.get("address2").setValue(data.address2),
       this.requestForm.get("city").setValue(data.city),
@@ -147,13 +149,18 @@ export class MyComponent implements OnInit {
   }
 
   save() {
-    console.log(this.signatureImg);
+    console.log(this.myObj);
     console.log(this.requestForm.value);
 
     let formattedDate = new Date(
       this.requestForm.get("dob").value
     ).toLocaleString();
 
+    if(this.myObj!=undefined){
+      var id=this.myObj.id;
+    }else{
+      var id=null;
+    }
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
 
@@ -172,6 +179,7 @@ export class MyComponent implements OnInit {
       mobile: this.requestForm.get("mobile").value,
       postal_code: this.requestForm.get("postal_code").value,
       gender: this.requestForm.get("gender").value,
+      id:id,
       state: this.requestForm.get("state").value,
       userId: this.userId,
       image: undefined ? null : String(this.signatureImg).split(",")[1],
