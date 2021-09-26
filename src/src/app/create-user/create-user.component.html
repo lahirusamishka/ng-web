@@ -79,8 +79,8 @@
                     <div class="full-width">
                         <button mat-raised-button id="login" color="primary" [disabled]="(requestForm.invalid || loading) || (requestForm.get('password1').value != requestForm.get('password2').value) "
                             (click)="save()">Save</button>
-                        <button mat-raised-button id="login" color="primary" 
-                            (click)="save()">Save</button>
+                        <button mat-raised-button id="login" color="warning" 
+                            (click)="clear()">Clear</button>
                     </div>
                 </mat-card-content>
             </mat-card>

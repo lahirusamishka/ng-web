@@ -147,7 +147,7 @@ export class LoanViewComponent implements OnInit {
       data: {
         message: "Are you sure want to delete?",
         buttonText: {
-          ok: "Save",
+          ok: "Yes",
           cancel: "No",
         },
       },
