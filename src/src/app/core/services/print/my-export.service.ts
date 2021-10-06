@@ -21,6 +21,9 @@ export class MyExportService {
     var invoiceName = {};
     var subTotal = 0;
 
+    console.log(data);
+    
+
     if (data.gender != null) {
       subTotal = Number(data.gender);
     }
@@ -349,70 +352,282 @@ export class MyExportService {
           },
           table: {
             headerRows: 1,
-            widths: ["6%", "10%", "*", "14%", "14%", "14%"],
+            widths: ["20%", "60%"],
             body: [
               [
                 {
                   text: {
-                    text: "Qty",
+                    text: "Full Name",
                     fontSize: 10,
                     bold: true,
-                    color: "white",
+                    color: "black",
                   },
                   alignment: "left",
-                  fillColor: "#458DC2",
                 },
                 {
                   text: {
-                    text: "Units",
+                    text: data.title + " " + data.first_name +" " + data.middle_name +" "+ data.last_name,
                     fontSize: 10,
                     bold: true,
-                    color: "white",
+                    color: "black",
                   },
-                  alignment: "center",
-                  fillColor: "#458DC2",
-                },
-                {
-                  text: {
-                    text: "Product",
-                    fontSize: 10,
-                    bold: true,
-                    color: "white",
-                  },
-                  fillColor: "#458DC2",
-                },
-                {
-                  text: {
-                    text: "Weight",
-                    fontSize: 10,
-                    bold: true,
-                    color: "white",
-                  },
-                  alignment: "center",
-                  fillColor: "#458DC2",
-                },
-                {
-                  text: {
-                    text: "Price",
-                    fontSize: 10,
-                    bold: true,
-                    color: "white",
-                  },
-                  alignment: "center",
-                  fillColor: "#458DC2",
-                },
-                {
-                  text: {
-                    text: "Total",
-                    fontSize: 10,
-                    bold: true,
-                    color: "white",
-                  },
-                  alignment: "right",
-                  fillColor: "#458DC2",
-                },
+                }
               ],
-              [{ text: { text: "\n" } }, {}, {}, {}, {}, {}],
+              [
+                {
+                  text: {
+                    text: "Select Loan Product",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.loan_product,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "disbursed by ",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.disbursed,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Address 1",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.address1,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Address 2",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.address2,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Email Address",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.email,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Mobile",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.mobile,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Date of Birth",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.dob,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Gender",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.gender,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "City",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.city,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "State",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.state,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Postal code",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.postal_code,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Working Status",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.working_status,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [
+                {
+                  text: {
+                    text: "Description",
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                  alignment: "left",
+                },
+                {
+                  text: {
+                    text: data.description,
+                    fontSize: 10,
+                    bold: true,
+                    color: "black",
+                  },
+                }
+              ],
+              [{ text: { text: "\n" } }, {}],
               // ...this.productsArray,
             ],
           },
@@ -460,13 +675,13 @@ export class MyExportService {
               [
                 {},
                 {
-                  text: "Subtotal",
+                  text: "",
                   alignment: "left",
                   fontSize: 9,
                   margin: [0, 2, 0, 2],
                 },
                 {
-                  text: "$" + "",
+                  text: "",
                   alignment: "right",
                   fontSize: 9,
                   margin: [0, 2, 0, 2],
@@ -475,13 +690,13 @@ export class MyExportService {
               [
                 {},
                 {
-                  text: "Tax",
+                  text: "",
                   fontSize: 9,
                   alignment: "left",
                   margin: [0, 2, 0, 2],
                 },
                 {
-                  text: "$" + "",
+                  text: "",
                   fontSize: 9,
                   alignment: "right",
                   margin: [0, 2, 0, 2],
@@ -490,7 +705,7 @@ export class MyExportService {
               [
                 {},
                 {
-                  text: "Total",
+                  text: "",
                   bold: true,
                   color: "#458DC2",
                   fontSize: 13,
@@ -498,7 +713,7 @@ export class MyExportService {
                   margin: [0, 2, 0, 2],
                 },
                 {
-                  text: "$" + "",
+                  text: "",
                   bold: true,
                   fontSize: 13,
                   color: "#458DC2",
