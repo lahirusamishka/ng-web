@@ -10,7 +10,7 @@ const appRoutes: Routes = [
     loadChildren: "./auth/auth.module#AuthModule",
   },
   {
-    path: "home",
+    path: "",
     loadChildren: "./home/home.module#HomeModule",
   },
   {

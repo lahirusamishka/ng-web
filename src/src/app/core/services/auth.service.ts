@@ -23,7 +23,6 @@ export class AuthenticationService {
       this._loginStatus = new BehaviorSubject<boolean>(true);
       // this.router.navigate(['/home']);
     }else{
-      this.router.navigate(['/']);
       const loginStatus = user.token;
       this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
     }
