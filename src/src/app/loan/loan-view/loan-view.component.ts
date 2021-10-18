@@ -1,17 +1,24 @@
-import { MatSort } from '@angular/material/sort';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCheckboxChange, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { LoanServiceService } from 'src/app/core/services/loan-service.service';
-import { ConfirmationDialog } from 'src/app/confirmation-dialog.component';
-import { forkJoin } from 'rxjs';
+import { MatSort } from "@angular/material/sort";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  MatCheckboxChange,
+  MatDialog,
+  MatPaginator,
+  MatTableDataSource,
+} from "@angular/material";
+import { LoanServiceService } from "src/app/core/services/loan-service.service";
+import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
+import { forkJoin } from "rxjs";
+import { Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+
 
 @Component({
-  selector: 'app-loan-view',
-  templateUrl: './loan-view.component.html',
-  styleUrls: ['./loan-view.component.css']
+  selector: "app-loan-view",
+  templateUrl: "./loan-view.component.html",
+  styleUrls: ["./loan-view.component.css"],
 })
 export class LoanViewComponent implements OnInit {
-
   dataSource;
   displayedColumns;
   inputData;
@@ -22,6 +29,16 @@ export class LoanViewComponent implements OnInit {
   actualPaginator: MatPaginator;
 
   selected3 = [];
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: "250px",
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
+  }
 
   constructor(
     private dialog: MatDialog,
@@ -155,11 +172,10 @@ export class LoanViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-  
         let subsArray = [];
         this.selected3.forEach((e) => {
           console.log(e.id);
-          
+
           subsArray.push(this.loanService.deleteBorrower(Number(e.id)));
         });
         forkJoin(subsArray).subscribe((results) => {
@@ -167,5 +183,19 @@ export class LoanViewComponent implements OnInit {
         });
       }
     });
+  }
+}
+@Component({
+  selector: "dialog-overview-example-dialog",
+  templateUrl: "dialog-overview-example-dialog.html",
+})
+export class DialogOverviewExampleDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: {}
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
