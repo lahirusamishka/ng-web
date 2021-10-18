@@ -38,10 +38,16 @@ const appRoutes: Routes = [
     data: { roles: ["admin", "customer","super-admin"] },
   },
   {
+    path: "loan-status",
+    loadChildren: "./loanStatus/loan-status.module#LoanStatusModule",
+    canActivate: [AuthGuard],
+    data: { roles: ["admin", "customer","super-admin"] },
+  },
+  {
     path: "loan",
     loadChildren: "./loan/loan.module#LoanModule",
     canActivate: [AuthGuard],
-    data: { roles: ["admin", "customer","super-admin"] },
+    data: { roles: ["admin","super-admin"] },
   },
   {
     path: "approve-loan",
@@ -53,7 +59,7 @@ const appRoutes: Routes = [
     path: "guarantor",
     loadChildren: "./guarantor/guarantor.module#GuarantorModule",
     canActivate: [AuthGuard],
-    data: { roles: ["admin", "customer","super-admin"] },
+    data: { roles: ["admin", "super-admin"] },
   },
   {
     path: "borrowers",

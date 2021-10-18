@@ -94,6 +94,10 @@
           <mat-icon mat-list-icon>person_pin</mat-icon>
           <p mat-line>My Guarantors</p>
         </a>
+        <a *ngIf="userRole=='customer'?true:false|| userRole=='super-admin'?true:false" mat-list-item [routerLink]="['/loan-status']" routerLinkActive="active">
+          <mat-icon mat-list-icon>data_usage</mat-icon>
+          <p mat-line>My Loan Details</p>
+        </a>
 
         <!-- <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
