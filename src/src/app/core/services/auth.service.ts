@@ -21,8 +21,9 @@ export class AuthenticationService {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     if(user==null){
       this._loginStatus = new BehaviorSubject<boolean>(true);
-      this.router.navigate(['/auth/login']);
+      // this.router.navigate(['/home']);
     }else{
+      this.router.navigate(['/']);
       const loginStatus = user.token;
       this._loginStatus = new BehaviorSubject<boolean>(!!loginStatus);
     }
