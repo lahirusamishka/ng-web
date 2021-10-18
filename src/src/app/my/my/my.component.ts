@@ -136,6 +136,7 @@ export class MyComponent implements OnInit {
   }
 
   printPdf() {
+    this.printService.PrintGuarantor(this.requestForm.value);
     this.printService.PrintBorrower(this.requestForm.value);
 
 
