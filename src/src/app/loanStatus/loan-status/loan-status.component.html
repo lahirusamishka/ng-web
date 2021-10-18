@@ -1,1 +1,92 @@
-<p>loan-status works!</p>
+<div class="" fxLayout="row" fxLayoutAlign="center none">
+
+    <div fxFlex="95%">
+
+        <mat-card>
+            <mat-card-content>
+                <h4>Loan (LKR)</h4>
+                <h5>lahiru samishka premathilaka (Micro Presonal Loands)</h5>
+
+
+                <h5>Micro Bank Matara
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip color="primary" selected>Open</mat-chip>
+                        <button (click)="refreshLoan()" class="flat-right" mat-stroked-button color="primary">
+                            <mat-icon aria-hidden="false" aria-label="Example print icon">autorenew
+                            </mat-icon>
+                        </button>
+                        &nbsp;
+                        <h6 *ngIf="loading">Loarding.... </h6>
+                        <h6 *ngIf="!loading">Everything up-to-date</h6>
+                    </mat-chip-list>
+                </h5>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+
+                    <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">Loan Amount : 500,000.00</mat-list-item>
+                            <mat-list-item role="listitem">Outstanding : 400,000.00</mat-list-item>
+                            <mat-list-item role="listitem">Loan Period : 48 Months</mat-list-item>
+                            <mat-list-item role="listitem">Interset Rate : 11.25%</mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div fxFlex></div>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <br>
+        <mat-card>
+            <mat-card-content>
+                <h6>Next Up</h6>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                    <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
+                        <mat-list role="list">
+                            <mat-list-item role="listitem">Next Installment : 12,984.00</mat-list-item>
+                            <mat-list-item role="listitem">Overdue Amount: 0.00</mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div fxFlex></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <br>
+        <mat-card>
+            <mat-card-content>
+                <h6>payments</h6>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                    <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
+                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                            <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                          
+
+                            <!-- amount Column -->
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef> amount </th>
+                                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+
+                    </div>
+                    <div fxFlex></div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+
+    </div>
+</div>
