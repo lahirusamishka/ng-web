@@ -31,6 +31,23 @@ export class LoanServiceService {
       })
     );
   }
+
+  usermail(data): Observable<any> {
+    return this.http.post(this.apiPath("/sendmail"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
+  userpay(data): Observable<any> {
+    return this.http.post(this.apiPath("/sendpay"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
   
   guarantorSave(data): Observable<any> {
     return this.http.post(this.apiPath("/guarantor"), data).pipe(
