@@ -7,7 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  btnShow=false;
+
+  constructor() { 
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (user == null) {
+      this.btnShow=true;
+    } else {
+      this.btnShow=false;
+    }
+  }
 
   ngOnInit() {
   }

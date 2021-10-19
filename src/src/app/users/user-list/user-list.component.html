@@ -134,7 +134,7 @@
                                   <mat-label>Interest Method</mat-label>
                                   <!-- <mat-select [(value)]="selected"> -->
 
-                                  <mat-select formControlName="interest" class="form-control"
+                                  <mat-select formControlName="interest"
                                       name="loan_interest_method" id="inputLoanInterestMethod" required=""
                                       onchange="enableDisableMethod();">
                                       <mat-option *ngFor="let method of InterstMethods" value="{{ method.keyName }}">{{ method.name }}</mat-option>

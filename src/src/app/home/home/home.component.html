@@ -6,13 +6,13 @@
               
 
                 &nbsp;&nbsp;
-                <button  type="button" [routerLink]="['/login']"
+                <button *ngIf="!btnShow" type="button" [routerLink]="['/login']"
                     routerLinkActive="router-link-active" class="btn btn-secondary btn-sm" id="edtbtn"
                     data-toggle="modal" data-target="#edit">
                     Dashboard
                 </button>
                 &nbsp;&nbsp;
-                <button type="button" [routerLink]="['/auth/login']"
+                <button *ngIf="btnShow" type="button" [routerLink]="['/auth/login']"
                     routerLinkActive="router-link-active" class="btn btn-secondary btn-sm" id="edtbtn"
                     data-toggle="modal" data-target="#edit">
                     login
