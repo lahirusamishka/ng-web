@@ -89,6 +89,14 @@ export class LoanServiceService {
     );
   }
 
+  getAllLoans(search): Observable<any> {
+    return this.http.post(this.apiPath("/cusloan/search"), search).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
   getUserById(userId): Observable<any> {
     return this.http.get(this.apiPath("/find/" + userId)).pipe(
       tap((data) => {

@@ -1,18 +1,21 @@
-import { LoanServiceService } from 'src/app/core/services/loan-service.service';
-import { MatSort } from '@angular/material/sort';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCheckboxChange, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { forkJoin } from 'rxjs';
-import { ConfirmationDialog } from 'src/app/confirmation-dialog.component';
+import { LoanServiceService } from "src/app/core/services/loan-service.service";
+import { MatSort } from "@angular/material/sort";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  MatCheckboxChange,
+  MatDialog,
+  MatPaginator,
+  MatTableDataSource,
+} from "@angular/material";
+import { forkJoin } from "rxjs";
+import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
 
 @Component({
-  selector: 'app-approve',
-  templateUrl: './approve.component.html',
-  styleUrls: ['./approve.component.css']
+  selector: "app-approve",
+  templateUrl: "./approve.component.html",
+  styleUrls: ["./approve.component.css"],
 })
 export class ApproveComponent implements OnInit {
-
-
   dataSource;
   displayedColumns;
   inputData;
@@ -30,6 +33,13 @@ export class ApproveComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    var search = {
+      search: null,
+    };
+    this.loanService.getAllLoans(search).subscribe((res) => {
+      console.log(res);
+    });
+
     this.loadTableData();
   }
 
@@ -156,11 +166,10 @@ export class ApproveComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-  
         let subsArray = [];
         this.selected3.forEach((e) => {
           console.log(e.id);
-          
+
           subsArray.push(this.loanService.deleteBorrower(Number(e.id)));
         });
         forkJoin(subsArray).subscribe((results) => {
@@ -169,5 +178,4 @@ export class ApproveComponent implements OnInit {
       }
     });
   }
-
 }
