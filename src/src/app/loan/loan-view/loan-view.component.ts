@@ -1,3 +1,4 @@
+import { browser } from "protractor";
 import { ActivatedRoute } from "@angular/router";
 import { MatSort } from "@angular/material/sort";
 import { Component, OnInit, ViewChild } from "@angular/core";
@@ -38,6 +39,7 @@ export class LoanViewComponent implements OnInit {
   gObj: any;
   installment: any;
   allInstallment = [];
+  userIdNew: any;
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "250px",
@@ -59,7 +61,7 @@ export class LoanViewComponent implements OnInit {
     });
   }
 
-  loadAllData(){
+  loadAllData() {
     this.loadTableData();
     this.getLoanData();
     this.getGaranter();
@@ -83,19 +85,28 @@ export class LoanViewComponent implements OnInit {
   }
   getAllInstallment() {
     this.loanService.getAllInstallment().subscribe((res) => {
-      this.allInstallment = res;
+      var newArray = [];
+
+      res.forEach((element) => {
+        if (this.loanObj.id == element.userId) {
+          newArray.push(element);
+        }
+      });
+      this.allInstallment = newArray;
     });
   }
   getGaranter() {
     this.loanService.getAllGuarantor().subscribe((res) => {
       res.forEach((element) => {
         if (element.userId == this.loanUserId) {
+          this.userIdNew = element.userId;
           console.log(element);
           this.gObj = element;
         }
       });
     });
   }
+
   getLoanData() {
     this.loanService.getAllBorrower().subscribe((res) => {
       res.forEach((element) => {
@@ -140,7 +151,6 @@ export class LoanViewComponent implements OnInit {
       this.loanService.usermail(data).subscribe((res) => {
         console.log(res);
         this.loadAllData();
-        
       });
     });
   }
@@ -155,7 +165,7 @@ export class LoanViewComponent implements OnInit {
       date: this.loanForm.get("date").value,
       status: "true",
       rate: 0,
-      userId: 2,
+      userId: this.loanObj.id,
       id: obj.id,
     };
 
