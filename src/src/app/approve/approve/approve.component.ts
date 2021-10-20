@@ -47,7 +47,7 @@ export class ApproveComponent implements OnInit {
       var arrayList = [];
       res.forEach((data) => {
         var obj = {
-          id: data.id,
+          id: data.borrower.id,
           first_name:
             this.checkNull(data.borrower.title) +
             " " +

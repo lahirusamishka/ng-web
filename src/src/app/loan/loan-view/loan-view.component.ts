@@ -37,6 +37,7 @@ export class LoanViewComponent implements OnInit {
   loanUserId: any;
   gObj: any;
   installment: any;
+  allInstallment=[];
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "250px",
@@ -62,6 +63,7 @@ export class LoanViewComponent implements OnInit {
     this.loadTableData();
     this.getLoanData();
     this.getGaranter();
+    this.getAllInstallment();
     this.loanForm = new FormGroup({
       date: new FormControl(""),
       amount: new FormControl(""),
@@ -71,6 +73,13 @@ export class LoanViewComponent implements OnInit {
       loanterm: new FormControl(""),
       interestrate: new FormControl(""),
     });
+    
+  }
+  getAllInstallment() {
+    this.loanService.getAllInstallment().subscribe(res=>{
+      this.allInstallment=res;
+      
+    })
   }
   getGaranter() {
     this.loanService.getAllGuarantor().subscribe((res) => {
@@ -114,7 +123,18 @@ export class LoanViewComponent implements OnInit {
 
     this.loanService.saveLoan(data).subscribe((res) => {
       console.log(res);
+
+      var data = {
+        username: "new",
+        name: "congratulations",
+        data: "your loan is approved. check here more details ->" + "http://localhost:4200/",
+        email: "lahirusamishka@gmail.com",
+      };
+      this.loanService.usermail(data).subscribe(res=>{
+        console.log(res);
+      })
     });
+    
   }
 
   sendMail() {}
@@ -136,7 +156,7 @@ export class LoanViewComponent implements OnInit {
   loadTableData() {
     console.log("cccc");
 
-    this.loanService.getAllBorrower().subscribe((res) => {
+    this.loanService.getAllInstallment().subscribe((res) => {
       console.log(res);
       var arrayList = [];
       res.forEach((data) => {

@@ -105,6 +105,14 @@ export class LoanServiceService {
     );
   }
   
+  getAllInstallment(): Observable<any> {
+    return this.http.get(this.apiPath("/loanData/all")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
   userDelete(id): Observable<any> {
     return this.http.delete(this.apiPath("/delete/" + id)).pipe(
       tap((data) => {
