@@ -12,7 +12,7 @@ import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
 import { forkJoin } from "rxjs";
 import { Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-loan-view",
@@ -37,7 +37,7 @@ export class LoanViewComponent implements OnInit {
   loanUserId: any;
   gObj: any;
   installment: any;
-  allInstallment=[];
+  allInstallment = [];
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "250px",
@@ -59,27 +59,32 @@ export class LoanViewComponent implements OnInit {
     });
   }
 
+  loadAllData(){
+    this.loadTableData();
+    this.getLoanData();
+    this.getGaranter();
+    this.getAllInstallment();
+  }
+
   ngOnInit() {
     this.loadTableData();
     this.getLoanData();
     this.getGaranter();
     this.getAllInstallment();
     this.loanForm = new FormGroup({
-      date: new FormControl(""),
-      amount: new FormControl(""),
+      date: new FormControl("", [Validators.required]),
+      amount: new FormControl("", [Validators.required]),
     });
     this.Installemtfrom = new FormGroup({
-      loanamount: new FormControl(""),
-      loanterm: new FormControl(""),
-      interestrate: new FormControl(""),
+      loanamount: new FormControl("", [Validators.required]),
+      loanterm: new FormControl("", [Validators.required]),
+      interestrate: new FormControl("", [Validators.required]),
     });
-    
   }
   getAllInstallment() {
-    this.loanService.getAllInstallment().subscribe(res=>{
-      this.allInstallment=res;
-      
-    })
+    this.loanService.getAllInstallment().subscribe((res) => {
+      this.allInstallment = res;
+    });
   }
   getGaranter() {
     this.loanService.getAllGuarantor().subscribe((res) => {
@@ -113,44 +118,63 @@ export class LoanViewComponent implements OnInit {
 
   loanSave() {
     console.log("sdsd");
-    
+
     var data = {
       installment: this.Installemtfrom.value,
       guarantorId: this.gObj.id,
       borrowerId: this.loanObj.id,
-      userId:this.loanUserId
+      userId: this.loanUserId,
     };
 
     this.loanService.saveLoan(data).subscribe((res) => {
       console.log(res);
-
+      this.loadAllData();
       var data = {
         username: "new",
         name: "congratulations",
-        data: "your loan is approved. check here more details ->" + "http://localhost:4200/",
+        data:
+          "your loan is approved. check here more details ->" +
+          "http://localhost:4200/",
         email: "lahirusamishka@gmail.com",
       };
-      this.loanService.usermail(data).subscribe(res=>{
+      this.loanService.usermail(data).subscribe((res) => {
         console.log(res);
-      })
+        this.loadAllData();
+        
+      });
     });
-    
   }
 
   sendMail() {}
 
-  addPayment() {
+  addPayment(obj) {
     var data = {
-      repaymentAmount: this.loanForm.get("amount").value,
-      repaymentMethod: "installment",
-      collectionDate: this.loanForm.get("date").value,
-      CollectedBorrower: this.loanObj.id,
-      loan: this.gObj.id,
+      userName: "asdasd",
+      amount: this.loanForm.get("amount").value,
+      note: "installment",
+      date: this.loanForm.get("date").value,
+      status: "true",
+      rate: 0,
+      userId: 2,
+      id: obj.id,
     };
 
-    this.loanService.userPayemnt(data).subscribe((res) => {
+    this.loanService.makeInstallment(data).subscribe((res) => {
       console.log(res);
+      this.loadAllData();
     });
+
+    // var data = {
+    //   repaymentAmount: this.loanForm.get("amount").value,
+    //   repaymentMethod: "installment",
+    //   collectionDate: this.loanForm.get("date").value,
+    //   CollectedBorrower: this.loanObj.id,
+    //   loan: this.gObj.id,
+    // };
+
+    // this.loanService.userPayemnt(data).subscribe((res) => {
+    //   console.log(res);
+    // });
   }
 
   loadTableData() {

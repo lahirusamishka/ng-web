@@ -104,9 +104,17 @@ export class LoanServiceService {
       })
     );
   }
-  
+
   getAllInstallment(): Observable<any> {
     return this.http.get(this.apiPath("/loanData/all")).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  makeInstallment(data): Observable<any> {
+    return this.http.post(this.apiPath("/loanData"), data).pipe(
       tap((data) => {
         return data;
       })
