@@ -1,3 +1,4 @@
+import { LoanServiceService } from 'src/app/core/services/loan-service.service';
 import { Component, OnInit } from "@angular/core";
 export interface PeriodicElement {
   position: number;
@@ -26,10 +27,37 @@ export class LoanStatusComponent implements OnInit {
   loading: boolean;
   displayedColumns: string[] = ["position", "amount"];
   dataSource = ELEMENT_DATA;
-  constructor() {}
+  userId: any;
+  allInstallment: any[];
+  constructor(private loanService: LoanServiceService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getAllInstallment();
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    this.userId= user.id
+    
+  }
+  getAllInstallment() {
 
+    this.loanService.getAllBorrower().subscribe(res=>{
+      console.log(res);
+      
+    })
+
+    this.loanService.getAllInstallment().subscribe((res) => {
+      var newArray = [];
+
+      res.forEach((element) => {
+        if (this.userId == element.userId) {
+          newArray.push(element);
+        }
+      });
+      this.allInstallment = newArray;
+
+      console.log(this.allInstallment);
+      
+    });
+  }
   refreshLoan() {
     // this.loading=true;
 
