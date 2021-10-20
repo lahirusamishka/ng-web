@@ -292,6 +292,8 @@ export class CreateUserComponent implements OnInit {
       status: "",
     };
 
+
+
     this.loading = true;
     this.loanService.userSave(data).subscribe(
       (data) => {
@@ -299,9 +301,34 @@ export class CreateUserComponent implements OnInit {
       },
       (error) => {
         if (error.error == "Existing user") {
+          var data = {
+            username: "new",
+            name: "please try again another gmail address ",
+            data: "Existing user  (Email is already used)",
+            email: this.requestForm.get("email").value,
+          };
+      
+          this.loanService.usermail(data).subscribe(
+            (res) => {},
+            (error) => {
+            }
+          );
           this.notificationService.openSnackBar("Existing user");
+
         }else{
           this.notificationService.openSnackBar("request saved successfully");
+          var data = {
+            username: "new",
+            name: "User Email : "+this.requestForm.get("email").value,
+            data: "User Password : "+ this.requestForm.get("password2").value,
+            email: this.requestForm.get("email").value,
+          };
+      
+          this.loanService.usermail(data).subscribe(
+            (res) => {},
+            (error) => {
+            }
+          );
           this.getAllUsers();
         }
         this.loading = false;

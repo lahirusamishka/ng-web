@@ -47,6 +47,30 @@ export class LoanServiceService {
       })
     );
   }
+
+  userPayemnt(data): Observable<any> {
+    return this.http.post(this.apiPath("/payment/save"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+
+  getInstallmetAmount(data): Observable<any> {
+    return this.http.post(this.apiPath("/intrestCal"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
+  
+  saveLoan(data): Observable<any> {
+    return this.http.post(this.apiPath("/cusloan"), data).pipe(
+      tap((data) => {
+        return data;
+      })
+    );
+  }
   
   
   guarantorSave(data): Observable<any> {

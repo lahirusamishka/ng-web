@@ -1,3 +1,4 @@
+import { ActivatedRoute } from "@angular/router";
 import { MatSort } from "@angular/material/sort";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import {
@@ -11,7 +12,7 @@ import { ConfirmationDialog } from "src/app/confirmation-dialog.component";
 import { forkJoin } from "rxjs";
 import { Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-loan-view",
@@ -22,6 +23,8 @@ export class LoanViewComponent implements OnInit {
   dataSource;
   displayedColumns;
   inputData;
+  loanForm: FormGroup;
+  Installemtfrom: FormGroup;
 
   addCheckBox = true;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -29,6 +32,11 @@ export class LoanViewComponent implements OnInit {
   actualPaginator: MatPaginator;
 
   selected3 = [];
+  loanId: any;
+  loanObj: any;
+  loanUserId: any;
+  gObj: any;
+  installment: any;
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: "250px",
@@ -42,11 +50,87 @@ export class LoanViewComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private loanService: LoanServiceService
-  ) {}
+    private loanService: LoanServiceService,
+    private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe((result) => {
+      this.loanId = result.id;
+    });
+  }
 
   ngOnInit() {
     this.loadTableData();
+    this.getLoanData();
+    this.getGaranter();
+    this.loanForm = new FormGroup({
+      date: new FormControl(""),
+      amount: new FormControl(""),
+    });
+    this.Installemtfrom = new FormGroup({
+      loanamount: new FormControl(""),
+      loanterm: new FormControl(""),
+      interestrate: new FormControl(""),
+    });
+  }
+  getGaranter() {
+    this.loanService.getAllGuarantor().subscribe((res) => {
+      res.forEach((element) => {
+        if (element.userId == this.loanUserId) {
+          console.log(element);
+          this.gObj = element;
+        }
+      });
+    });
+  }
+  getLoanData() {
+    this.loanService.getAllBorrower().subscribe((res) => {
+      res.forEach((element) => {
+        if (element.id == this.loanId) {
+          this.loanUserId = element.userId;
+          this.loanObj = element;
+        }
+      });
+    });
+  }
+
+  checkMothInstallemt() {
+    console.log(this.Installemtfrom.value);
+    this.loanService
+      .getInstallmetAmount(this.Installemtfrom.value)
+      .subscribe((res) => {
+        this.installment = res;
+      });
+  }
+
+  loanSave() {
+    console.log("sdsd");
+    
+    var data = {
+      installment: this.Installemtfrom.value,
+      guarantorId: this.gObj.id,
+      borrowerId: this.loanObj.id,
+      userId:this.loanUserId
+    };
+
+    this.loanService.saveLoan(data).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  sendMail() {}
+
+  addPayment() {
+    var data = {
+      repaymentAmount: this.loanForm.get("amount").value,
+      repaymentMethod: "installment",
+      collectionDate: this.loanForm.get("date").value,
+      CollectedBorrower: this.loanObj.id,
+      loan: this.gObj.id,
+    };
+
+    this.loanService.userPayemnt(data).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   loadTableData() {
