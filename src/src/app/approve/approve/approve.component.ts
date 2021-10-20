@@ -33,42 +33,38 @@ export class ApproveComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    var search = {
-      search: null,
-    };
-    this.loanService.getAllLoans(search).subscribe((res) => {
-      console.log(res);
-    });
 
     this.loadTableData();
   }
 
   loadTableData() {
-    console.log("cccc");
+    var search = {
+      search: null,
+    };
 
-    this.loanService.getAllBorrower().subscribe((res) => {
+    this.loanService.getAllLoans(search).subscribe((res) => {
       console.log(res);
       var arrayList = [];
       res.forEach((data) => {
         var obj = {
           id: data.id,
           first_name:
-            this.checkNull(data.title) +
+            this.checkNull(data.borrower.title) +
             " " +
-            this.checkNull(data.first_name) +
+            this.checkNull(data.borrower.first_name) +
             " " +
-            this.checkNull(data.middle_name) +
+            this.checkNull(data.borrower.middle_name) +
             " " +
-            this.checkNull(data.last_name),
-          city: data.address1 + "_" + data.address2,
-          disbursed: this.checkNull(data.disbursed),
-          dob: this.checkNull(data.dob),
-          email: this.checkNull(data.email),
-          interest: this.checkNull(data.interest),
-          loan_product: this.checkNull(data.loan_product),
-          mobile: this.checkNull(data.mobile),
-          postal_code: this.checkNull(data.postal_code),
-          working_status: this.checkNull(data.working_status),
+            this.checkNull(data.borrower.last_name),
+          city: data.borrower.address1 + "_" + data.borrower.city,
+          disbursed: this.checkNull(data.borrower.disbursed),
+          dob: this.checkNull(data.borrower.dob),
+          email: this.checkNull(data.borrower.email),
+          interest: this.checkNull(data.borrower.interest),
+          loan_product: this.checkNull(data.borrower.loan_product),
+          mobile: this.checkNull(data.borrower.mobile),
+          postal_code: this.checkNull(data.borrower.postal_code),
+          working_status: this.checkNull(data.borrower.working_status),
           edit: " ",
         };
         arrayList.push(obj);
