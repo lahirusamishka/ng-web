@@ -14,6 +14,7 @@ export class LoanStatusComponent implements OnInit {
   borrower: any;
   loanObj: any;
   installment: any;
+  countAll: number;
 
   constructor(private loanService: LoanServiceService) {}
 
@@ -42,12 +43,17 @@ export class LoanStatusComponent implements OnInit {
 
     this.loanService.getAllInstallment().subscribe((res) => {
       var newArray = [];
+      var count = 0
       res.forEach((element) => {
         if (this.loanObj.borrower.id == element.userId) {
+          if(!element.status){
+            count+=1
+          }
           newArray.push(element);
         }
       });
-      console.log(newArray);
+      this.countAll=count
+      console.log(this.countAll);
       
       this.allInstallment = newArray;
     });

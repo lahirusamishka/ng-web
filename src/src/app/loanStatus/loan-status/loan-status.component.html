@@ -27,7 +27,7 @@
                     <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
                         <mat-list role="list" *ngIf="loanObj">
                             <mat-list-item role="listitem">Loan Amount : {{ loanObj.principalAmount }}</mat-list-item>
-                            <mat-list-item role="listitem">Outstanding : {{ loanObj.principalAmount / loanObj.loanDuration }}</mat-list-item>
+                            <!-- <mat-list-item role="listitem">Outstanding : {{ countAll*installment | number:'1.2-2' }}</mat-list-item> -->
                             <mat-list-item role="listitem">Loan Period : {{ loanObj.loanDuration }} Months
                             </mat-list-item>
                             <mat-list-item role="listitem">Interset Rate : {{ loanObj.loanInterestAmount }}%
