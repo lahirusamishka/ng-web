@@ -1,22 +1,5 @@
 import { LoanServiceService } from "src/app/core/services/loan-service.service";
 import { Component, OnInit } from "@angular/core";
-export interface PeriodicElement {
-  position: number;
-  amount: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, amount: "H" },
-  { position: 2, amount: "He" },
-  { position: 3, amount: "Li" },
-  { position: 4, amount: "Be" },
-  { position: 5, amount: "B" },
-  { position: 6, amount: "C" },
-  { position: 7, amount: "N" },
-  { position: 8, amount: "O" },
-  { position: 9, amount: "F" },
-  { position: 10, amount: "Ne" },
-];
 
 @Component({
   selector: "app-loan-status",
@@ -25,54 +8,52 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class LoanStatusComponent implements OnInit {
   loading: boolean;
-  displayedColumns: string[] = ["position", "amount"];
-  dataSource = ELEMENT_DATA;
   userId: any;
   allInstallment: any[];
 
   borrower: any;
+  loanObj: any;
+  installment: any;
 
   constructor(private loanService: LoanServiceService) {}
 
   ngOnInit() {
+    this.userId = this.loanService.getLogUserId();
     this.getAllInstallment();
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    this.userId = user.id;
   }
 
   getAllInstallment() {
-    this.loanService.getAllBorrower().subscribe((res) => {
-      var array;
+    this.loanService.getAllLoans({ search: null }).subscribe((res) => {
       res.forEach((element) => {
-        console.log(element.userId);
+        if (this.userId == element.borrower.userId) {
+          this.loanObj = element;
+          var data = {
+            loanamount: element.principalAmount,
+            loanterm: element.loanDuration,
+            interestrate: element.loanInterestAmount,
+          };
 
-        if (this.userId == element.userId) {
-          
-          this.borrower = element;
-          console.log(this.borrower);
+          this.loanService.getInstallmetAmount(data).subscribe((res1) => {
+            this.installment = res1;
+          });
         }
       });
     });
 
     this.loanService.getAllInstallment().subscribe((res) => {
-      
-      
-      
       var newArray = [];
-
       res.forEach((element) => {
-        if (this.borrower.userId == element.id) {
+        if (this.loanObj.borrower.id == element.userId) {
           newArray.push(element);
         }
       });
+      console.log(newArray);
+      
       this.allInstallment = newArray;
-
-      console.log(this.allInstallment);
     });
   }
   refreshLoan() {
     // this.loading=true;
-
     this.loading = false;
   }
 }

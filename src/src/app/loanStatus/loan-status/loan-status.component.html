@@ -2,10 +2,12 @@
 
     <div fxFlex="95%">
 
-        <mat-card *ngIf="borrower">
+        <mat-card *ngIf="loanObj">
             <mat-card-content>
-                <h4>{{ borrower.loan_product | titlecase}}</h4>
-                <h5>{{ borrower.first_name | titlecase}} {{ borrower.middle_name | titlecase }} {{ borrower.last_name | titlecase }} (Micro Presonal Loands)</h5>
+                <h4>{{ loanObj.borrower.loan_product | titlecase}}</h4>
+                <h5>{{ loanObj.borrower.title | titlecase}} {{ loanObj.borrower.first_name | titlecase}} {{
+                    loanObj.borrower.middle_name | titlecase }} {{ loanObj.borrower.last_name | titlecase }} (Micro
+                    Presonal Loands)</h5>
 
 
                 <h5>Micro Bank Matara
@@ -23,11 +25,13 @@
                 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
 
                     <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
-                        <mat-list role="list">
-                            <mat-list-item role="listitem">Loan Amount : 500,000.00</mat-list-item>
-                            <mat-list-item role="listitem">Outstanding : 400,000.00</mat-list-item>
-                            <mat-list-item role="listitem">Loan Period : 48 Months</mat-list-item>
-                            <mat-list-item role="listitem">Interset Rate : 11.25%</mat-list-item>
+                        <mat-list role="list" *ngIf="loanObj">
+                            <mat-list-item role="listitem">Loan Amount : {{ loanObj.principalAmount }}</mat-list-item>
+                            <mat-list-item role="listitem">Outstanding : {{ loanObj.principalAmount / loanObj.loanDuration }}</mat-list-item>
+                            <mat-list-item role="listitem">Loan Period : {{ loanObj.loanDuration }} Months
+                            </mat-list-item>
+                            <mat-list-item role="listitem">Interset Rate : {{ loanObj.loanInterestAmount }}%
+                            </mat-list-item>
                         </mat-list>
                     </div>
                     <div fxFlex></div>
@@ -42,8 +46,9 @@
                 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
                     <div fxFlex="100%" fxFlex.sm="95%" fxFlex.xs="95%">
                         <mat-list role="list">
-                            <mat-list-item role="listitem">Next Installment : 12,984.00</mat-list-item>
-                            <mat-list-item role="listitem">Overdue Amount: 0.00</mat-list-item>
+                            <mat-list-item role="listitem">Next Installment : {{ installment | number:'1.2-2'}}
+                            </mat-list-item>
+                            <!-- <mat-list-item role="listitem">Overdue Amount: 0.00</mat-list-item> -->
                         </mat-list>
                     </div>
                     <div fxFlex></div>
@@ -51,24 +56,26 @@
             </mat-card-content>
         </mat-card>
         <br>
-        
+
         <mat-card>
             <mat-card-content>
                 <h6>payments</h6>
                 <mat-list role="list">
                     <mat-list-item *ngFor="let item of allInstallment; let i = index" role="listitem">
-        
+
                         <div *ngIf="item.status==true">
                             <mat-form-field class="example-full-width" appearance="fill">
-                                <input matInput type="text" disabled value="{{ item.date }}" placeholder="date" value="">
+                                <input matInput type="text" disabled value="{{ item.date }}" placeholder="date"
+                                    value="">
                             </mat-form-field>
-                            <mat-form-field  class="example-full-width" appearance="fill">
-                                <input style="color: darkcyan;" matInput type="text" disabled value="Paid - Rs. {{ item.amount }}" placeholder="date" value="">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <input style="color: darkcyan;" matInput type="text" disabled
+                                    value="Paid - Rs. {{ item.amount }}" placeholder="date" value="">
                             </mat-form-field>
                             <!-- <h5 style="background-color: chartreuse;color: black;">Installment {{ item.id }} is Paid</h5> -->
                         </div>
                         <div *ngIf="item.status!=true">
-        
+
                             <mat-form-field appearance="fill">
                                 <mat-label>Choose a date</mat-label>
                                 <input disabled value="" matInput [matDatepicker]="picker">
@@ -77,16 +84,15 @@
                             </mat-form-field>
                             &nbsp;&nbsp;
                             <mat-form-field class="example-full-width" appearance="fill">
-                                <mat-label>{{ i+1 }} - Installment</mat-label>
-                                <input disabled matInput type="number" placeholder="Amount"
-                                    value="Sushi">
+                                <mat-label>Rs.{{ installment | number:'1.2-2' }}- Installment</mat-label>
+                                <input disabled matInput type="number" placeholder="Amount" value="Sushi">
                             </mat-form-field>&nbsp;&nbsp;
-        
-                           
+
+
                         </div>
-        
+
                     </mat-list-item>
-        
+
                 </mat-list>
             </mat-card-content>
         </mat-card>
