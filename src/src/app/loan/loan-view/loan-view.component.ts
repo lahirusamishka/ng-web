@@ -134,7 +134,7 @@ export class LoanViewComponent implements OnInit {
       installment: this.Installemtfrom.value,
       guarantorId: this.gObj.id,
       borrowerId: this.loanObj.id,
-      userId: this.loanUserId,
+      userId: this.loanObj.id,
     };
 
     this.loanService.saveLoan(data).subscribe((res) => {
