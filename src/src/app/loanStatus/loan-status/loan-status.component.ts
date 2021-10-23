@@ -36,6 +36,7 @@ export class LoanStatusComponent implements OnInit {
 
           this.loanService.getInstallmetAmount(data).subscribe((res1) => {
             this.installment = res1;
+            this.loading = false;
           });
         }
       });
@@ -59,7 +60,8 @@ export class LoanStatusComponent implements OnInit {
     });
   }
   refreshLoan() {
-    // this.loading=true;
-    this.loading = false;
+   this.loading=true;
+   this.getAllInstallment()
+    
   }
 }
