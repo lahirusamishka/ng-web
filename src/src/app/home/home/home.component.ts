@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.requestForm = new FormGroup({
-      email: new FormControl(""),
-      body: new FormControl(""),
+      email: new FormControl("", [Validators.required, Validators.email]),
+      body: new FormControl("", [Validators.required]),
     });
   }
 

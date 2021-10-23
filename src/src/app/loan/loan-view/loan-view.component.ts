@@ -1,3 +1,4 @@
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { browser } from "protractor";
 import { ActivatedRoute } from "@angular/router";
 import { MatSort } from "@angular/material/sort";
@@ -54,6 +55,7 @@ export class LoanViewComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private loanService: LoanServiceService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe((result) => {
@@ -136,22 +138,37 @@ export class LoanViewComponent implements OnInit {
       borrowerId: this.loanObj.id,
       userId: this.loanObj.id,
     };
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: "Are you sure want to approve?",
+        buttonText: {
+          ok: "Yes",
+          cancel: "No",
+        },
+      },
+    });
 
-    this.loanService.saveLoan(data).subscribe((res) => {
-      console.log(res);
-      this.loadAllData();
-      var data = {
-        username: "new",
-        name: "congratulations",
-        data:
-          "your loan is approved. check here more details ->" +
-          "http://localhost:4200/",
-        email: "lahirusamishka@gmail.com",
-      };
-      this.loanService.usermail(data).subscribe((res) => {
-        console.log(res);
-        this.loadAllData();
-      });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+       
+        this.loanService.saveLoan(data).subscribe((res) => {
+          console.log(res);
+          this.loadAllData();
+          var data = {
+            username: "new",
+            name: "congratulations",
+            data:
+              "your loan is approved. check here more details ->" +
+              "http://localhost:4200/",
+            email: "lahirusamishka@gmail.com",
+          };
+          this.loanService.usermail(data).subscribe((res) => {
+            console.log(res);
+            this.notificationService.openSnackBar("Loan is approved");
+            this.loadAllData();
+          });
+        });
+      }
     });
   }
 

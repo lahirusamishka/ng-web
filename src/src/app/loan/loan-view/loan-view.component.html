@@ -95,7 +95,7 @@
                         value="Sushi">
                 </mat-form-field>&nbsp;&nbsp;
 
-                <button (click)="loanSave()" mat-stroked-button color="accent">
+                <button (click)="loanSave()" [disabled]="Installemtfrom.invalid" mat-stroked-button color="accent">
                     <mat-icon aria-hidden="false" aria-label="Example print icon">add_circle_outline
                     </mat-icon>Approve
                 </button>
@@ -138,7 +138,7 @@
                                             value="Sushi">
                                     </mat-form-field>&nbsp;&nbsp;
 
-                                    <button (click)="addPayment(item)" mat-stroked-button color="basic">
+                                    <button (click)="addPayment(item)" [disabled]="loanForm.invalid" mat-stroked-button color="basic">
                                         <mat-icon style="color: darkcyan;" aria-hidden="false" aria-label="Example print icon">paid
                                         </mat-icon>
                                         <mat-label style="color: darkcyan;">Add Payment</mat-label>
